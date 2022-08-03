@@ -26,6 +26,22 @@ const controllerGetId=async(req, res)=>{
     }
 }
 
+const controllerGetName=async(req, res)=>{
+    try {
+        if(req.query.name){
+            let category = await Category.findOne({where:{name:req.query.name}});
+            if(!category){
+                throw new TypeError("Error no existe una categoria con este Nombre")
+            }
+            return res.status(200).send(category);
+        }else{
+            throw new TypeError("Error al validar el nombre de la categoria")
+        }
+    } catch (e) {
+        return res.status(400).send(e.message);
+    }
+}
+
 const controllerPost=async(req, res)=>{
     const name= new String(req.body.name);
     try {
@@ -89,4 +105,4 @@ const controllerDelete=async(req, res)=>{
 }
 
 
-module.exports = {controllerGet, controllerPost, controllerGetId, controllerDelete, controllerPut}
+module.exports = {controllerGet, controllerPost, controllerGetId, controllerDelete, controllerPut,controllerGetName}
