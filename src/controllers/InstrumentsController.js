@@ -32,6 +32,7 @@ const postInstrument = async (req, res, next) => {
 
 
 const getInstrument = async (req, res, next) => {
+    try {
     let name=req.query.name
     if(name){
         let instrumentos=await Instrument.findAll({
@@ -46,6 +47,9 @@ const getInstrument = async (req, res, next) => {
            }) 
         if(instrumentos.length) return res.status(200).send(instrumentos)
         else return res.status(400).send("no existen instrumentos")
+    }
+    } catch (error) {
+        next(error);
     }
 }
 
