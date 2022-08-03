@@ -73,29 +73,18 @@ const deleteInstrument = async (req, res) => {
 
 const getIdInstrument = async (req, res) => {
   const { id } = req.params;
-  const totalInstruments = await getInstrument();
-
   try {
-    const idInstrument = await totalInstruments.filter(
-      (instrument) => instrument.id == id
-    );
-    const instrument = idInstrument.map((instrument) => {
-      return {
-        name: instrument.name,
-        brand: instrument.brand,
-        price: instrument.price,
-        img: instrument.img,
-        description: instrument.description,
-        stock: instrument.stock,
-        status: instrument.status,
-      };
-    });
+    if (id) {
+      const idInstrument = await Instrument.findByPk(id, {
+        include: { model: Category },
+      });
 
-    idInstrument.length
-      ? res.status(200).send(instrument)
-      : res.status(404).send(`Id ${id} not found`);
+      idInstrument
+        ? res.status(200).send(idInstrument)
+        : res.status(404).send(`Id ${id} not found`);
+    }
   } catch (error) {
-    next(error);
+    return res.status(400).send(e.message);
   }
 };
 
