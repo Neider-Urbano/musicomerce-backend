@@ -32,13 +32,5 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM("new", "used"),
       allowNull: false,
     },
-    /* categoryId:{
-      type: Sequelize.INTEGER,
-      references: {
-        model: Category,
-        key: 'id'
-    } 
-
-    }*/
   });
 };
