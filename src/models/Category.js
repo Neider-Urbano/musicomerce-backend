@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     "category",
     {
       name: {
-        type: DataTypes.ENUM("stringed","wind","percussion"),
+        type: DataTypes.STRING,
         unique: true,
         allowNull: false,
       },
