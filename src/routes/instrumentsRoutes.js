@@ -17,7 +17,7 @@ router.post("/", (req,res)=>{
             include:{model:Category}
         })
         if(instrumentos.length) return res.status(200).send(instrumentos)
-        else return res.status(400).send("no existe ese instrumento")
+        else return res.status(400).send("no existe ese instrumento:"+name)
     }else{
         let instrumentos=await Instrument.findAll({
             include:{model:Category}
