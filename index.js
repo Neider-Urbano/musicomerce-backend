@@ -7,7 +7,7 @@ conn.sync({ force: true }).then(() => {
     server.listen(4000, async() => {
       await allData();
       console.log("Data loaded");
-      console.log("%s listening at 3000");
+      console.log("%s listening at 4000");
     });
   } catch (error) {
     console.log(error);
