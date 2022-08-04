@@ -1,5 +1,5 @@
-
 const { Category } = require('../db');
+const dataCategory=require("../categories.json")
 
 const controllerGet=async(req, res)=>{
     try {
@@ -47,15 +47,17 @@ const controllerPost=async(req, res)=>{
     try {
         if(req.body.hasOwnProperty("name") && name.length>2){
             let categorys = await Category.findAll();
-            const newCategory=[];
-            if(categorys[0]){
-                newCategory.push(req.body)
-            }else{
-                newCategory.push({"name": "stringed"})
-                newCategory.push({"name": "wind"})
-                newCategory.push({"name": "percussion"})
-
+            var newCategory=[];
+            var existCategory=false;
+            if(!categorys[0]){
+                dataCategory.categories.map((category)=>{
+                    newCategory.push(category)
+                    if(category.name.toLocaleLowerCase()===req.body.name.toLocaleLowerCase()){
+                        existCategory=true
+                    }
+                })
             }
+            if(!existCategory){newCategory.push(req.body)}
             await Category.bulkCreate(newCategory)
             res.status(200).send("Category created")
         }else{
@@ -89,7 +91,7 @@ const controllerDelete=async(req, res)=>{
     const {id}=req.params;
     try {
         if(id){
-            const deleteCategory=await Category.destroy({
+            const deleteCategory=await Category.destroy({ 
                 where: {id: id}
             })
             if(!deleteCategory){
