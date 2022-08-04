@@ -4,7 +4,7 @@ const { allData } = require("./src/bulkCreate.js");
 
 conn.sync({ force: true }).then(() => {
   try {
-    server.listen(3000, async() => {
+    server.listen(4000, async() => {
       await allData();
       console.log("Data loaded");
       console.log("%s listening at 3000");
