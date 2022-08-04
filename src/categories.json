@@ -1,11 +1,13 @@
-[
+{
+  "categories": [
     {
-        "name": "stringed"
+      "name": "stringed"
     },
     {
-        "name": "wind"
+      "name": "wind"
     },
     {
-        "name": "percussion"
+      "name": "percussion"
     }
-]
+  ]
+}
