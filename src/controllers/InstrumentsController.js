@@ -71,6 +71,7 @@ const deleteInstrument = async (req, res) => {
   }
 };
 
+
 const getIdInstrument = async (req, res) => {
   const { id } = req.params;
   try {
@@ -78,7 +79,6 @@ const getIdInstrument = async (req, res) => {
       const idInstrument = await Instrument.findByPk(id, {
         include: { model: Category },
       });
-
       idInstrument
         ? res.status(200).send(idInstrument)
         : res.status(404).send(`Id ${id} not found`);
@@ -88,9 +88,53 @@ const getIdInstrument = async (req, res) => {
   }
 };
 
+const putInstrument = async (req, res, next) => {
+    try {
+        const { id, name, brand, price, img, description, stock, status, category } = req.body;
+
+        if (!id || !name || !brand || !price || !img || !description || !stock || !status || !category) throw new TypeError("data sent incorrectly")
+
+
+        let instrument = await Instrument.findByPk(parseInt(id))
+        if (!instrument) throw new TypeError("incorrect id")
+         await instrument.update({
+            name,
+            brand,
+            price:parseInt(price),
+            img,
+            description,
+            stock: parseInt(stock),
+            status
+        }); 
+        let newInstrumentCategory = await Category.findOne({
+            where: {
+                name: category
+            }
+        })
+        console.log(newInstrumentCategory)
+        if (!newInstrumentCategory) throw new TypeError("category sent incorrectly")
+        instrument.setCategory(newInstrumentCategory);
+
+        instrument.save()
+        res.status(200).send("successfully edited")
+        
+
+    } catch (error) {
+            next(error)
+    }
+
+}
+
+
+
+      
+
 module.exports = {
+
   postInstrument,
   getInstrument,
   deleteInstrument,
   getIdInstrument,
+  putInstrument
 };
+
