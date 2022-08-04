@@ -35,7 +35,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Instrument, Category } = sequelize.models;
 
 
-Category.hasMany(Instrument);
+Category.hasMany(Instrument,{ onDelete: 'cascade', onUpdate: 'cascade', hooks:true });
 Instrument.belongsTo(Category);
 
 module.exports = {
