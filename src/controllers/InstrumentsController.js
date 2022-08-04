@@ -35,7 +35,7 @@ const getInstrument = async (req, res, next) => {
     let name = req.query.name;
     if (name) {
       let instrumentos = await Instrument.findAll({
-        where: { name: { [Op.like]: `%${name}%` } },
+        where: { name: { [Op.iLike]: `%${name}%` } },
         include: { model: Category },
       });
       if (instrumentos.length) return res.status(200).send(instrumentos);
