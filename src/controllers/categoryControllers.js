@@ -1,5 +1,6 @@
 const { Category } = require('../db');
 const dataCategory=require("../categories.json")
+const { Op } = require("sequelize");
 
 const controllerGet=async(req, res)=>{
     try {
@@ -29,7 +30,7 @@ const controllerGetId=async(req, res)=>{
 const controllerGetName=async(req, res)=>{
     try {
         if(req.query.name){
-            let category = await Category.findOne({where:{name:req.query.name}});
+            let category = await Category.findOne({where:{name: { [Op.iLike]: `%${req.query.name}%` }}});
             if(!category){
                 throw new TypeError("Error, Category name not found")
             }
