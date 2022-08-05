@@ -83,7 +83,7 @@ const getIdInstrument = async (req, res) => {
         ? res.status(200).send(idInstrument)
         : res.status(404).send(`Id ${id} not found`);
     }
-  } catch (error) {
+  } catch (e) {
     return res.status(400).send(e.message);
   }
 };
