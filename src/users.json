@@ -1,0 +1,19 @@
+{
+    "users": [
+        {
+            "email":"neider019@gmail.com",
+            "userName":"neider19",
+            "password":"urban12*"
+        },
+        {
+            "email":"ananias87@gmail.com",
+            "userName":"ananias87",
+            "password":"87ani123"
+        },
+        {
+            "email":"pedrito1torres@gmail.com",
+            "userName":"pedri-torres",
+            "password":"1234"
+        }
+    ]
+}

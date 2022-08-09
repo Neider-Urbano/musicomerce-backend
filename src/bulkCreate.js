@@ -1,6 +1,7 @@
 const { categories } = require("./categories.json");
 const { instruments } = require("./instruments.json");
-const { Instrument, Category } = require("./db");
+const { users } = require("./users.json");
+const { Instrument, Category,User } = require("./db");
 
 let allData = async () => {
   try {
@@ -9,7 +10,7 @@ let allData = async () => {
     });
     if (!categoryValidation) {
       await Category.bulkCreate(categories);
-      console.log("Categories loaded in db succesfully");
+      console.log("Categories and Users loaded in db succesfully");
     }
 
     const instValidation = await Instrument.findOne({
@@ -17,6 +18,7 @@ let allData = async () => {
     });
 
     if (!instValidation) {
+      await User.bulkCreate(users)
       const inst = instruments.map(async (e) => {
         await Instrument.create(e).then(async (x) => {
           const category = e.category;

@@ -32,11 +32,14 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Instrument, Category } = sequelize.models;
+const { Instrument, Category, User } = sequelize.models;
 
 
 Category.hasMany(Instrument,{ onDelete: 'cascade', onUpdate: 'cascade', hooks:true });
 Instrument.belongsTo(Category);
+
+User.hasMany(Instrument,{ onDelete: 'cascade', onUpdate: 'cascade', hooks:true });
+Instrument.belongsTo(User);
 
 module.exports = {
   ...sequelize.models, 
