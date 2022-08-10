@@ -47,10 +47,6 @@ module.exports = (sequelize) => {
           this.setDataValue("password", hash);
         },
       },
-      img: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       rating: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: true,
