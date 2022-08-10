@@ -32,7 +32,7 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Instrument, Category, User, Admin } = sequelize.models;
+const { Instrument, Category, User, Admin, Cart } = sequelize.models;
 
 Admin.hasMany(Instrument);
 Instrument.belongsTo(Admin);
