@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
   sequelize.define(
     "user",
     {
-      identificationNumber: {
+      dni: {
         type: DataTypes.INTEGER,
         unique: true,
         allowNull: true,
@@ -55,19 +55,19 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: true,
       },
-      storeAddress: {
+      /* storeAddress: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
-      },
+      }, */
       buyerAddress: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
       },
-      status: {
+      /*  status: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: false,
-      },
+      }, */
       rol: {
         type: DataTypes.STRING,
         defaultValue: "user",
