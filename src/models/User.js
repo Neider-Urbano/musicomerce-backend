@@ -51,19 +51,10 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: true,
       },
-      /* storeAddress: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
-        allowNull: true,
-      }, */
       buyerAddress: {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
       },
-      /*  status: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-        defaultValue: false,
-      }, */
       rol: {
         type: DataTypes.STRING,
         defaultValue: "user",
