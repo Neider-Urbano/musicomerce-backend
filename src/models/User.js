@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 module.exports = (sequelize) => {
   sequelize.define(
@@ -8,23 +8,23 @@ module.exports = (sequelize) => {
       identificationNumber: {
         type: DataTypes.INTEGER,
         unique: true,
-        allowNull: true
+        allowNull: true,
       },
       firstName: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: true
+        allowNull: true,
       },
       lastName: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      contacNumber: {
+      contactNumber: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        validate:{
-          len: [5,20]
-        }
+        validate: {
+          len: [5, 20],
+        },
       },
       email: {
         type: DataTypes.STRING(319),
@@ -44,7 +44,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         set(value) {
           const hash = bcrypt.hashSync(value, 10);
-          this.setDataValue('password', hash);
+          this.setDataValue("password", hash);
         },
       },
       img: {
@@ -63,11 +63,15 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: true,
       },
-      status:{
+      status: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: false,
-      }
+      },
+      rol: {
+        type: DataTypes.STRING,
+        defaultValue: "user",
+      },
     },
     { timestamps: false }
   );
