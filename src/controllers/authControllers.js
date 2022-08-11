@@ -43,32 +43,9 @@ const controllerLogin = async (req, res) => {
     return res.status(404).send(error.message);
   }
 }
-const verifyToken = async (req, res, next) => {
-  try {
-    const BearesToken = req.get("Authorization");
 
-    if (!BearesToken) return res.status(401).send({ error: "token not found" })
-
-    const token = BearesToken.replace("Bearer ", "")
-    try {
-
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
-      if(!decoded.user_id) return res.status(401).send({error:"id not found"})
-      req.user_id = decoded.user_id;
-      next();
-    } catch (e) {
-      console.log(e)
-      return res.status(400).send(e)
-    }
-
-  } catch (e) {
-    console.log(e)
-    return res.status(400).send(e)
-  }
-}
 
 module.exports = {
   controllerLogin,
   controllerRegister,
-  verifyToken
 };

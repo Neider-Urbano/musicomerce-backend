@@ -1,6 +1,7 @@
 const { User } = require('../db');
 const { users } = require("../users.json");
 const { Op } = require("sequelize");
+const { verifyToken } = require('../middlewares/authjwt')
 
 
 const getUsers = async (req, res) => {
@@ -63,19 +64,33 @@ const postUsersAll = async (req, res) => {
 }
 
 const putUser = async (req, res) => {
-    const { id } = req.params;
-    const { userName, email, password } = req.body;
+    const { 
+        dni, 
+        firstName, 
+        lastName, 
+        contactNumber, 
+        email, 
+        userName, 
+        password, 
+        buyerAddress 
+    } = req.body;
+
     try {
-        if (id && (userName && email && password)) {
-            let putUser = await User.findByPk(id);
-            if (!putUser) {
-                throw new TypeError("Error, User Id not found")
+        if(!dni || !firstName || !lastName || !contactNumber || !email || !userName || !password || !buyerAddress){
+
+            let userToPut = await User.findByPk(req.user_id);
+            if(!userToPut){
+                throw new Error("Error, User doesn't exist");
             }
-            await User.update(req.body, { where: { id: id } })
-            res.status(200).send("User updated")
+            await User.update(req.body, { 
+                where: { 
+                  id: req.user_id 
+                } 
+            })
+            res.status(200).send("User updated");
         } else {
-            throw new TypeError("Error, User information invalid")
-        }
+            throw new Error("Error, User information incomplete!!");
+        }  
     } catch (e) {
         return res.status(400).send(e.message);
     }
