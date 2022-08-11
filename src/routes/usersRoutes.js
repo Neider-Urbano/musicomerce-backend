@@ -1,14 +1,15 @@
+const {verifyToken}=require("../controllers/authControllers")
 const { Router } = require("express");
 const router = Router();
 
 const {
     postUser,deleteUser,putUser,
-    postUsersAll,getUsers,getUserId,
+    postUsersAll,getUsers,getUserToken,
 } = require("../controllers/usersController");
 
 
 router.get("/", getUsers);
-router.get("/:id", getUserId);
+router.get("/token",[verifyToken], getUserToken);
 router.post("/all", postUsersAll);
 router.post("/", postUser);
 router.delete("/:id", deleteUser);
