@@ -3,7 +3,8 @@
         {
             "email":"neider019@gmail.com",
             "userName":"neider19",
-            "password":"urban12*"
+            "password":"urban12*",
+            "rol":"admin"
         },
         {
             "email":"ananias87@gmail.com",
