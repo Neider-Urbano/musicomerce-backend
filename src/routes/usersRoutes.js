@@ -1,4 +1,4 @@
-const {verifyToken}=require("../controllers/authControllers")
+const {verifyToken}=require("../middlewares/authjwt")
 const { Router } = require("express");
 const router = Router();
 
@@ -13,6 +13,6 @@ router.get("/token",[verifyToken], getUserToken);
 router.post("/all", postUsersAll);
 router.post("/", postUser);
 router.delete("/:id", deleteUser);
-router.put("/:id", putUser);
+router.put("/", [verifyToken], putUser);
 
 module.exports = router;
