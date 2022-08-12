@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
     "user",
     {
       dni: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         unique: true,
         allowNull: true,
       },
@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       contactNumber: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: true,
         validate: {
           len: [5, 20],
@@ -52,7 +52,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       buyerAddress: {
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
         allowNull: true,
       },
       rol: {
