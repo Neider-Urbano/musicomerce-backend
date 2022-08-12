@@ -1,4 +1,4 @@
-const { User } = require("../db");
+const { User, Admin } = require("../db");
 const { users } = require("../users.json");
 const { Op } = require("sequelize");
 const { verifyToken } = require("../middlewares/authjwt");
@@ -40,6 +40,10 @@ const postUser = async (req, res) => {
   const { userName, email, password } = req.body;
   try {
     if (userName && email && password) {
+      const admin = await Admin.findOne({ where: { userName: userName } });
+      if (admin) {
+        throw new TypeError("Error, User exist");
+      }
       await User.create(req.body);
       res.status(200).send("User created");
     } else {
@@ -62,46 +66,51 @@ const postUsersAll = async (req, res) => {
   }
 };
 
-
 const putUser = async (req, res) => {
-  const { 
-      dni, 
-      firstName, 
-      lastName, 
-      contactNumber, 
-      email, 
-      userName, 
-      password, 
-      buyerAddress 
+  const {
+    dni,
+    firstName,
+    lastName,
+    contactNumber,
+    email,
+    userName,
+    password,
+    buyerAddress,
   } = req.body;
 
   try {
-      if(!dni || !firstName || !lastName || !contactNumber || !email || !userName || !buyerAddress){
-          throw new Error("Error, User information incomplete!!");
+    if (
+      !dni ||
+      !firstName ||
+      !lastName ||
+      !contactNumber ||
+      !email ||
+      !userName ||
+      !buyerAddress
+    ) {
+      throw new Error("Error, User information incomplete!!");
+    } else {
+      let userToPut = await User.findByPk(req.user_id);
+      console.log("Usuario: ", userToPut);
+      if (!userToPut) {
+        throw new Error("Error, User doesn't exist");
+      }
 
-      } else {
-          let userToPut = await User.findByPk(req.user_id);
-          console.log("Usuario: ", userToPut)
-          if(!userToPut){
-              throw new Error("Error, User doesn't exist");
-          }
-          
-          userToPut.dni = dni
-          userToPut.firstName = firstName
-          userToPut.lastName = lastName
-          userToPut.contactNumber = contactNumber
-          userToPut.email = email
-          userToPut.userName = userName
-          userToPut.buyerAddress = buyerAddress
+      userToPut.dni = dni;
+      userToPut.firstName = firstName;
+      userToPut.lastName = lastName;
+      userToPut.contactNumber = contactNumber;
+      userToPut.email = email;
+      userToPut.userName = userName;
+      userToPut.buyerAddress = buyerAddress;
 
-          await userToPut.save();
-          return res.status(200).send("User updated");
-    }  
+      await userToPut.save();
+      return res.status(200).send("User updated");
+    }
   } catch (e) {
-      return res.status(400).send(e.message);
+    return res.status(400).send(e.message);
   }
-}
-
+};
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
