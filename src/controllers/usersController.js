@@ -62,46 +62,46 @@ const postUsersAll = async (req, res) => {
   }
 };
 
+
 const putUser = async (req, res) => {
-  const {
-    dni,
-    firstName,
-    lastName,
-    contactNumber,
-    email,
-    userName,
-    password,
-    buyerAddress,
+  const { 
+      dni, 
+      firstName, 
+      lastName, 
+      contactNumber, 
+      email, 
+      userName, 
+      password, 
+      buyerAddress 
   } = req.body;
 
   try {
-    if (
-      !dni ||
-      !firstName ||
-      !lastName ||
-      !contactNumber ||
-      !email ||
-      !userName ||
-      !password ||
-      !buyerAddress
-    ) {
-      let userToPut = await User.findByPk(req.user_id);
-      if (!userToPut) {
-        throw new Error("Error, User doesn't exist");
-      }
-      await User.update(req.body, {
-        where: {
-          id: req.user_id,
-        },
-      });
-      res.status(200).send("User updated");
-    } else {
-      throw new Error("Error, User information incomplete!!");
-    }
+      if(!dni || !firstName || !lastName || !contactNumber || !email || !userName || !buyerAddress){
+          throw new Error("Error, User information incomplete!!");
+
+      } else {
+          let userToPut = await User.findByPk(req.user_id);
+          console.log("Usuario: ", userToPut)
+          if(!userToPut){
+              throw new Error("Error, User doesn't exist");
+          }
+          
+          userToPut.dni = dni
+          userToPut.firstName = firstName
+          userToPut.lastName = lastName
+          userToPut.contactNumber = contactNumber
+          userToPut.email = email
+          userToPut.userName = userName
+          userToPut.buyerAddress = buyerAddress
+
+          await userToPut.save();
+          return res.status(200).send("User updated");
+    }  
   } catch (e) {
-    return res.status(400).send(e.message);
+      return res.status(400).send(e.message);
   }
-};
+}
+
 
 const deleteUser = async (req, res) => {
   const { id } = req.params;
