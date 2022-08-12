@@ -11,7 +11,6 @@ const {
 
 router.get("/", getAdmins);
 router.post("/register", createtAdmin);
-//router.get("/token", [verifyToken], getUserToken);
 router.delete("/:id", deleteAdmin);
 router.put("/", modifyAdmin);
 router.get("/:id", getAdminById);
