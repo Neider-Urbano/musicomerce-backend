@@ -7,8 +7,8 @@ const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/musicommerce`,
   {
-    logging: false, 
-    native: false, 
+    logging: false,
+    native: false,
   }
 );
 const basename = path.basename(__filename);
@@ -32,13 +32,47 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Instrument, Category } = sequelize.models;
+const { Instrument, Category, User, Admin, Cart } = sequelize.models;
 
+Admin.hasMany(Instrument);
+Instrument.belongsTo(Admin);
 
-Category.hasMany(Instrument,{ onDelete: 'cascade', onUpdate: 'cascade', hooks:true });
+User.belongsToMany(Instrument, {
+  through: "Favorites",
+});
+Instrument.belongsToMany(User, {
+  through: "Favorites",
+});
+
+User.belongsToMany(Instrument, {
+  through: "HistoryShop",
+});
+Instrument.belongsToMany(User, {
+  through: "HistoryShop",
+});
+
+User.belongsToMany(Instrument, {
+  through: "Cart",
+});
+Instrument.belongsToMany(User, {
+  through: "Cart",
+});
+
+Category.hasMany(Instrument, {
+  onDelete: "cascade",
+  onUpdate: "cascade",
+  hooks: true,
+});
 Instrument.belongsTo(Category);
 
+/* User.hasMany(Instrument, {
+  onDelete: "cascade",
+  onUpdate: "cascade",
+  hooks: true,
+});
+Instrument.belongsTo(User); */
+
 module.exports = {
-  ...sequelize.models, 
-  conn: sequelize, 
+  ...sequelize.models,
+  conn: sequelize,
 };

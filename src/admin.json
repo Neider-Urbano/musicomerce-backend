@@ -1,0 +1,20 @@
+{
+  "admins": [
+    {
+      "userName": "neider29",
+      "password": "urban12*",
+      "firstName": "Neider",
+      "lastName": "Crack",
+      "email": "neider019@gmail.com",
+      "rol": "admin"
+    },
+    {
+      "userName": "oscar22",
+      "password": "oscar123",
+      "firstName": "Oscar",
+      "lastName": "Restrepo",
+      "email": "oscar22@gmail.com",
+      "rol": "admin"
+    }
+  ]
+}

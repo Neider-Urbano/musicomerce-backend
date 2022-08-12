@@ -4,6 +4,14 @@ const { Op } = require("sequelize");
 const postInstrument = async (req, res, next) => {
   const { name, brand, price, img, description, stock, status, category } =
     req.body;
+
+  const nameUpperCase = name.split(" ");
+  for (let i = 0; i < nameUpperCase.length; i++) {
+    nameUpperCase[i] =
+      nameUpperCase[i][0].toUpperCase() + nameUpperCase[i].substr(1);
+  }
+  const finalName = nameUpperCase.join(" ");
+
   try {
     let newInstrumentCategory = await Category.findOne({
       where: {
@@ -14,7 +22,7 @@ const postInstrument = async (req, res, next) => {
       throw new TypeError("Category not found");
     } else {
       let newInstrument = await Instrument.create({
-        name,
+        name: finalName,
         brand,
         price,
         img,
@@ -71,7 +79,6 @@ const deleteInstrument = async (req, res) => {
   }
 };
 
-
 const getIdInstrument = async (req, res) => {
   const { id } = req.params;
   try {
@@ -83,58 +90,70 @@ const getIdInstrument = async (req, res) => {
         ? res.status(200).send(idInstrument)
         : res.status(404).send(`Id ${id} not found`);
     }
-  } catch (error) {
+  } catch (e) {
     return res.status(400).send(e.message);
   }
 };
 
 const putInstrument = async (req, res, next) => {
-    try {
-        const { id, name, brand, price, img, description, stock, status, category } = req.body;
+  try {
+    const {
+      id,
+      name,
+      brand,
+      price,
+      img,
+      description,
+      stock,
+      status,
+      category,
+    } = req.body;
 
-        if (!id || !name || !brand || !price || !img || !description || !stock || !status || !category) throw new TypeError("data sent incorrectly")
+    if (
+      !id ||
+      !name ||
+      !brand ||
+      !price ||
+      !img ||
+      !description ||
+      !stock ||
+      !status ||
+      !category
+    )
+      throw new TypeError("data sent incorrectly");
 
+    let instrument = await Instrument.findByPk(parseInt(id));
+    if (!instrument) throw new TypeError("incorrect id");
+    await instrument.update({
+      name,
+      brand,
+      price: parseInt(price),
+      img,
+      description,
+      stock: parseInt(stock),
+      status,
+    });
+    let newInstrumentCategory = await Category.findOne({
+      where: {
+        name: category,
+      },
+    });
+    console.log(newInstrumentCategory);
+    if (!newInstrumentCategory)
+      throw new TypeError("category sent incorrectly");
+    instrument.setCategory(newInstrumentCategory);
 
-        let instrument = await Instrument.findByPk(parseInt(id))
-        if (!instrument) throw new TypeError("incorrect id")
-         await instrument.update({
-            name,
-            brand,
-            price:parseInt(price),
-            img,
-            description,
-            stock: parseInt(stock),
-            status
-        }); 
-        let newInstrumentCategory = await Category.findOne({
-            where: {
-                name: category
-            }
-        })
-        console.log(newInstrumentCategory)
-        if (!newInstrumentCategory) throw new TypeError("category sent incorrectly")
-        instrument.setCategory(newInstrumentCategory);
-
-        instrument.save()
-        res.status(200).send("successfully edited")
-        
-
-    } catch (error) {
-            next(error)
-    }
-
-}
-
-
-
-      
+    instrument.save();
+    res.status(200).send("successfully edited");
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
-
   postInstrument,
   getInstrument,
   deleteInstrument,
   getIdInstrument,
-  putInstrument
+  putInstrument,
 };
-
