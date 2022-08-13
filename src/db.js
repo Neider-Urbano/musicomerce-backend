@@ -32,7 +32,7 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Instrument, Category, User, Admin, Cart } = sequelize.models;
+const { Instrument, Category, User, Admin, Cart, Payment } = sequelize.models;
 
 Admin.hasMany(Instrument);
 Instrument.belongsTo(Admin);
@@ -52,10 +52,10 @@ Instrument.belongsToMany(User, {
 });
 
 User.belongsToMany(Instrument, {
-  through: "Cart",
+  through: "Trolley",
 });
 Instrument.belongsToMany(User, {
-  through: "Cart",
+  through: "Trolley",
 });
 
 Category.hasMany(Instrument, {
@@ -64,6 +64,9 @@ Category.hasMany(Instrument, {
   hooks: true,
 });
 Instrument.belongsTo(Category);
+
+Payment.belongsToMany(Cart, { through: "Transaction" });
+Cart.belongsToMany(Payment, { through: "Transaction" });
 
 /* User.hasMany(Instrument, {
   onDelete: "cascade",
