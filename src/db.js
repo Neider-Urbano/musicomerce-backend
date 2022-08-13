@@ -65,8 +65,12 @@ Category.hasMany(Instrument, {
 });
 Instrument.belongsTo(Category);
 
-Payment.belongsToMany(Cart, { through: "Transaction" });
-Cart.belongsToMany(Payment, { through: "Transaction" });
+Payment.belongsToMany(Cart, {
+  through: "Transaction",
+});
+Cart.belongsToMany(Payment, {
+  through: "Transaction",
+});
 
 /* User.hasMany(Instrument, {
   onDelete: "cascade",
