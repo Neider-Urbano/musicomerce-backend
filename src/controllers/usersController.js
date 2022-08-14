@@ -45,7 +45,7 @@ const postUser = async (req, res) => {
         throw new TypeError("Error, User exist");
       }
       await User.create(req.body);
-      res.status(200).send("User created");
+      res.status(200).send({ ok: "User created!" });
     } else {
       throw new TypeError("Error, User information invalid");
     }
@@ -86,7 +86,8 @@ const putUser = async (req, res) => {
       !contactNumber ||
       !email ||
       !userName ||
-      !buyerAddress
+      !buyerAddress ||
+      !password
     ) {
       throw new Error("Error, User information incomplete!!");
     } else {
