@@ -68,26 +68,27 @@ const postUsersAll = async (req, res) => {
 
 const putUser = async (req, res) => {
   const {
+    email,
+    userName,
+    password,
+    rol,
     dni,
     firstName,
     lastName,
     contactNumber,
-    email,
-    userName,
-    password,
     buyerAddress,
   } = req.body;
-
   try {
     if (
+      !email ||
+      !userName ||
+      !password ||
+      !rol ||
       !dni ||
       !firstName ||
       !lastName ||
       !contactNumber ||
-      !email ||
-      !userName ||
-      !buyerAddress ||
-      !password
+      !buyerAddress
     ) {
       throw new Error("Error, User information incomplete!!");
     } else {
@@ -97,15 +98,18 @@ const putUser = async (req, res) => {
         throw new Error("Error, User doesn't exist");
       }
 
-      userToPut.dni = dni;
-      userToPut.firstName = firstName;
-      userToPut.lastName = lastName;
-      userToPut.contactNumber = contactNumber;
-      userToPut.email = email;
-      userToPut.userName = userName;
-      userToPut.buyerAddress = buyerAddress;
-
-      await userToPut.save();
+      User.findAll(userToPut.id).then((result) => {
+        result.email = email;
+        result.userName = userName;
+        result.password = password;
+        result.rol = rol;
+        resultdni = dni;
+        result.firstName = firstName;
+        resul.lastName = lastName;
+        result.contactNumber = contactNumber;
+        result.buyerAddress = buyerAddress;
+        return result.save();
+      });
       return res.status(200).send("User updated");
     }
   } catch (e) {

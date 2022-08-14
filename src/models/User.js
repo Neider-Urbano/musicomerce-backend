@@ -47,10 +47,6 @@ module.exports = (sequelize) => {
           this.setDataValue("password", hash);
         },
       },
-      rating: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-        allowNull: true,
-      },
       buyerAddress: {
         type: DataTypes.STRING,
         allowNull: true,
