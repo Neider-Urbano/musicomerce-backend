@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         type: DataTypes.BIGINT,
         allowNull: true,
         validate: {
-          len: [5, 20],
+          len: [0, 20],
         },
       },
       email: {
@@ -56,7 +56,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
       rol: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("user", "banned"),
         defaultValue: "user",
       },
     },
