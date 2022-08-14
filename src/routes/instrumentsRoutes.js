@@ -1,3 +1,4 @@
+const { verifyToken } = require("../middlewares/authjwt");
 const { Router } = require("express");
 const router = Router();
 
@@ -9,17 +10,13 @@ const {
   getInstrument,
   deleteInstrument,
   getIdInstrument,
-  putInstrument
+  putInstrument,
 } = require("../controllers/InstrumentsController.js");
-
 
 router.post("/", postInstrument);
 router.get("/", getInstrument);
 router.delete("/:id", deleteInstrument);
 router.get("/:id", getIdInstrument);
-router.put("/",putInstrument);
-
-
-
+router.put("/", [verifyToken], putInstrument);
 
 module.exports = router;
