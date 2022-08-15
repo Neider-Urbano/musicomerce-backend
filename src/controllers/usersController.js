@@ -1,4 +1,4 @@
-const { User, Admin } = require("../db");
+const { User, Admin,Instrument } = require("../db");
 const { users } = require("../users.json");
 const { Op } = require("sequelize");
 const { verifyToken } = require("../middlewares/authjwt");
@@ -26,7 +26,9 @@ const getUserToken = async (req, res) => {
   try {
     let id = req.user_id;
     if (id) {
-      let userExist = await User.findByPk(id);
+      let userExist = await User.findByPk(id,{
+        include:{model:Instrument}
+      });
       if (!userExist) throw new TypeError("Error, User not found with this Id");
       return res.status(200).send(userExist);
     }
