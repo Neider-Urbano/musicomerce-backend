@@ -17,7 +17,7 @@ categoryRouter.get("/name", controllerGetName);
 
 categoryRouter.post("/", controllerPost);
 
-categoryRouter.put("/:id", controllerPut);
+categoryRouter.put("/", controllerPut);
 
 categoryRouter.delete("/:id", controllerDelete);
 
