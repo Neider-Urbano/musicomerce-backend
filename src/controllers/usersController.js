@@ -92,25 +92,23 @@ const putUser = async (req, res) => {
     ) {
       throw new Error("Error, User information incomplete!!");
     } else {
-      let userToPut = await User.findByPk(req.user_id);
-      console.log("Usuario: ", userToPut);
+      let userToPut = await User.findByPk(req.body.id);
       if (!userToPut) {
         throw new Error("Error, User doesn't exist");
       }
-
-      User.findAll(userToPut.id).then((result) => {
+      await User.findByPk(userToPut.id).then((result) => {
         result.email = email;
         result.userName = userName;
         result.password = password;
         result.rol = rol;
-        resultdni = dni;
+        result.dni = dni;
         result.firstName = firstName;
-        resul.lastName = lastName;
+        result.lastName = lastName;
         result.contactNumber = contactNumber;
         result.buyerAddress = buyerAddress;
-        return result.save();
+        result.save();
+        return res.status(200).send("User updated");
       });
-      return res.status(200).send("User updated");
     }
   } catch (e) {
     return res.status(400).send(e.message);
