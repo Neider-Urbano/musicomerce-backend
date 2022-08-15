@@ -84,32 +84,28 @@ const putUser = async (req, res) => {
     if (
       !email ||
       !userName ||
-      !password ||
-      !rol ||
       !dni ||
       !firstName ||
       !lastName ||
       !contactNumber ||
       !buyerAddress
     ) {
-      throw new Error("Error, User information incomplete!!");
+      throw new Error({error: "Error, User information incomplete!!"});
     } else {
-      let userToPut = await User.findByPk(req.body.id);
+      let userToPut = await User.findByPk(req.user_id);
       if (!userToPut) {
-        throw new Error("Error, User doesn't exist");
+        throw new Error({error:"Error, User doesn't exist"});
       }
-      await User.findByPk(userToPut.id).then((result) => {
+      await User.findByPk(req.user_id).then((result) => {
         result.email = email;
         result.userName = userName;
-        result.password = password;
-        result.rol = rol;
         result.dni = dni;
         result.firstName = firstName;
         result.lastName = lastName;
         result.contactNumber = contactNumber;
         result.buyerAddress = buyerAddress;
         result.save();
-        return res.status(200).send("User updated");
+        return res.status(200).send({ok:"User information updated :)"});
       });
     }
   } catch (e) {
