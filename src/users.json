@@ -1,18 +1,33 @@
 {
   "users": [
     {
+      "dni": 123456,
+      "firstName": "Neider",
+      "lastName": "U",
+      "contactNumber": 321654887,
+      "buyerAddress": "avenida siempre viva 123",
       "email": "neider019@gmail.com",
       "userName": "neider19",
       "password": "urban12*",
       "rol": "user"
     },
     {
+      "dni": 358797989,
+      "firstName": "Ana",
+      "lastName": "Nias",
+      "contactNumber": 3135889797,
+      "buyerAddress": "avenida siempre viva 453",
       "email": "ananias87@gmail.com",
       "userName": "ananias87",
       "password": "87ani123",
       "rol": "user"
     },
     {
+      "dni": 887897987,
+      "firstName": "Nias",
+      "lastName": "Fer",
+      "contactNumber": 889798765465,
+      "buyerAddress": "avenida pre viva 453",
       "email": "pedrito1torres@gmail.com",
       "userName": "pedri-torres",
       "password": "1234",
