@@ -117,6 +117,56 @@ const putUser = async (req, res) => {
   }
 };
 
+const putUserAdmin = async (req, res) => {
+  const {
+    email,
+    userName,
+    password,
+    rol,
+    dni,
+    firstName,
+    lastName,
+    contactNumber,
+    buyerAddress,
+  } = req.body;
+  try {
+    if (
+      !email ||
+      !userName ||
+      !password ||
+      !rol ||
+      !dni ||
+      !firstName ||
+      !lastName ||
+      !contactNumber ||
+      !buyerAddress
+    ) {
+      throw new Error("Error, User information incomplete!!");
+    } else {
+      let userToPut = await User.findByPk(req.body.id);
+      if (!userToPut) {
+        throw new Error("Error, User doesn't exist");
+      }
+      await User.findByPk(userToPut.id).then((result) => {
+        result.email = email;
+        result.userName = userName;
+        result.password = password;
+        result.rol = rol;
+        result.dni = dni;
+        result.firstName = firstName;
+        result.lastName = lastName;
+        result.contactNumber = contactNumber;
+        result.buyerAddress = buyerAddress;
+        result.save();
+        return res.status(200).send("User updated");
+      });
+    }
+  } catch (e) {
+    return res.status(400).send(e.message);
+  }
+};
+
+
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
@@ -143,4 +193,5 @@ module.exports = {
   getUserToken,
   deleteUser,
   putUser,
+  putUserAdmin
 };
