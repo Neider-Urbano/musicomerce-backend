@@ -77,7 +77,7 @@ const controllerPost = async (req, res) => {
 };
 
 const controllerPut = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
   const name = new String(req.body.name);
   try {
     if (id && req.body.hasOwnProperty("name") && name.length > 2) {
