@@ -1,10 +1,8 @@
 const { verifyToken } = require("../middlewares/authjwt");
+const { verifyTokenAdmin } = require("../middlewares/authjwtAdmin");
 const { Router } = require("express");
 const router = Router();
 
-const { Instrument } = require("../db");
-const { Category } = require("../db");
-const { Op } = require("sequelize");
 const {
   postInstrument,
   getInstrument,
@@ -13,10 +11,10 @@ const {
   putInstrument,
 } = require("../controllers/InstrumentsController.js");
 
-router.post("/", postInstrument);
+router.post("/",[verifyTokenAdmin], postInstrument);
 router.get("/", getInstrument);
-router.delete("/:id", deleteInstrument);
+router.delete("/",[verifyTokenAdmin], deleteInstrument);
 router.get("/:id", getIdInstrument);
-router.put("/", [verifyToken], putInstrument);
+router.put("/",[verifyTokenAdmin], putInstrument);
 
 module.exports = router;

@@ -96,7 +96,7 @@ const controllerPut = async (req, res) => {
 };
 
 const controllerDelete = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
     if (id) {
       const deleteCategory = await Category.destroy({

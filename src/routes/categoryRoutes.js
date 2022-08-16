@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const categoryRouter = Router();
+const {verifyTokenAdmin}=require("../middlewares/authjwtAdmin")
+
 const {
   controllerGet,
   controllerPost,
@@ -15,10 +17,10 @@ categoryRouter.get("/id/:id", controllerGetId);
 
 categoryRouter.get("/name", controllerGetName);
 
-categoryRouter.post("/", controllerPost);
+categoryRouter.post("/",[verifyTokenAdmin], controllerPost);
 
-categoryRouter.put("/", controllerPut);
+categoryRouter.put("/",[verifyTokenAdmin], controllerPut);
 
-categoryRouter.delete("/:id", controllerDelete);
+categoryRouter.delete("/",[verifyTokenAdmin], controllerDelete);
 
 module.exports = categoryRouter;

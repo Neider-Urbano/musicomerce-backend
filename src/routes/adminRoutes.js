@@ -1,3 +1,4 @@
+const {verifyTokenAdmin}=require("../middlewares/authjwtAdmin")
 const { Router } = require("express");
 const router = Router();
 
@@ -9,10 +10,10 @@ const {
   getAdminById,
 } = require("../controllers/adminController");
 
-router.get("/", getAdmins);
-router.post("/register", createtAdmin);
-router.delete("/", deleteAdmin);
-router.put("/", modifyAdmin);
-router.get("/:id", getAdminById);
+router.get("/",[verifyTokenAdmin], getAdmins);
+router.post("/register",[verifyTokenAdmin], createtAdmin);
+router.delete("/", [verifyTokenAdmin],deleteAdmin);
+router.put("/",[verifyTokenAdmin], modifyAdmin);
+router.get("/:id",[verifyTokenAdmin], getAdminById);
 
 module.exports = router;

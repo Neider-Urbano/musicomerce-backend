@@ -61,7 +61,7 @@ const getInstrument = async (req, res, next) => {
 };
 
 const deleteInstrument = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
     if (id) {
       const deleteInstrument = await Instrument.destroy({
