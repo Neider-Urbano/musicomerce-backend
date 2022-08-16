@@ -68,7 +68,6 @@ const modifyAdmin = async (req, res) => {
       throw new Error("Error, Admin information incomplete!!");
     } else {
       let modifyAdmin = await Admin.findByPk(id);
-      console.log("Admin: ", modifyAdmin);
       if (!modifyAdmin) {
         throw new Error("Error, Admin doesn't exist");
       }

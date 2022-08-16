@@ -2,7 +2,7 @@ const server = require("./src/app.js");
 const { conn } = require("./src/db.js");
 const { allData } = require("./src/bulkCreate.js");
 
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   try {
     server.listen(4000, async() => {
       await allData();
