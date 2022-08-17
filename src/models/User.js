@@ -55,6 +55,10 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM("user", "banned"),
         defaultValue: "user",
       },
+      history:{
+        type:DataTypes.ARRAY(DataTypes.JSONB),
+        allowNull:true,
+      }
     },
     { timestamps: false }
   );

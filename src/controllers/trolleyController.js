@@ -38,7 +38,7 @@ const get_trolley = async (req, res) => {
                             name: carritos[i].dataValues.name,
                             brand: carritos[i].dataValues.brand,
                             price: carritos[i].dataValues.price,
-                            img: carritos[i].dataValues.name,
+                            img: carritos[i].dataValues.img,
                             description: carritos[i].dataValues.description,
                             stock: carritos[i].dataValues.stock,
                             status: carritos[i].dataValues.status,

@@ -44,12 +44,7 @@ Instrument.belongsToMany(User, {
   through: "Favorites",
 });
 
-User.belongsToMany(Instrument, {
-  through: "HistoryShop",
-});
-Instrument.belongsToMany(User, {
-  through: "HistoryShop",
-});
+
 
 User.belongsToMany(Instrument, {
   through: Trolley,
