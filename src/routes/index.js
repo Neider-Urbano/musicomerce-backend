@@ -5,7 +5,7 @@ const usersRouter = require("./usersRoutes.js");
 const authRouter = require("./authRoutes");
 const paymentRouter = require("./paymentRoutes");
 const adminsRouter = require("./adminRoutes.js");
-const trolleyRouter = require("./trolleyRouter.js");
+const trolleyRouter = require("./trolleyRoutes.js");
 const mailController = require("./mailRoutes");
 
 const router = Router();
