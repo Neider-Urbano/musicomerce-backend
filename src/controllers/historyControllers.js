@@ -44,7 +44,7 @@ const create_history = async (req, res) => {
             return res.send("se agrego al historial del usuario")
         } else {
             user.set({
-                history: user.history.concat(array)
+                history:array
             })
             await user.save()
             return res.send("se pusheo al array de historial")
