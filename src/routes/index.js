@@ -6,7 +6,7 @@ const authRouter = require("./authRoutes");
 const paymentRouter = require("./paymentRoutes");
 const adminsRouter = require("./adminRoutes.js");
 const trolleyRouter=require("./trolleyRoutes.js")
-const historyRoute=require("./historyRoutes")
+const purchaseRouter=require("./purchaseRoutes")
 
 const router = Router();
 
@@ -17,7 +17,8 @@ router.use("/auth", authRouter);
 router.use("/payment", paymentRouter);
 router.use("/admins", adminsRouter);
 router.use("/trolley",trolleyRouter);
-router.use("/history",historyRoute)
+router.use("/purchase",purchaseRouter);
+
 
 
 module.exports = router;
