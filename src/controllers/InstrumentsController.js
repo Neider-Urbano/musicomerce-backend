@@ -95,35 +95,13 @@ const getIdInstrument = async (req, res) => {
   }
 };
 
-const putInstrument = async (req, res, next) => {
+const putInstrument = async (req, res) => {
   try {
-    const {
-      id,
-      name,
-      brand,
-      price,
-      img,
-      description,
-      stock,
-      status,
-      category,
-      isBanned
-    } = req.body;
+    const {id,name,brand,price,img,description,stock,status,category,isBanned} = req.body;
 
-    if (
-      !id ||
-      !name ||
-      !brand ||
-      !price ||
-      !img ||
-      !description ||
-      !stock ||
-      !status ||
-      !category||
-      !isBanned
-    )
+    if (!id ||!name ||!brand ||!price ||!img ||!description ||!stock ||!status ||!category|| isBanned===null){
       throw new TypeError("data sent incorrectly");
-
+    }
     let instrument = await Instrument.findByPk(parseInt(id));
     if (!instrument) throw new TypeError("incorrect id");
     await instrument.update({
@@ -134,13 +112,13 @@ const putInstrument = async (req, res, next) => {
       description,
       stock: parseInt(stock),
       status,
+      isBanned
     });
     let newInstrumentCategory = await Category.findOne({
       where: {
         name: category,
       },
     });
-    console.log(newInstrumentCategory);
     if (!newInstrumentCategory)
       throw new TypeError("category sent incorrectly");
     instrument.setCategory(newInstrumentCategory);
@@ -148,7 +126,7 @@ const putInstrument = async (req, res, next) => {
     instrument.save();
     res.status(200).send("successfully edited");
   } catch (error) {
-    next(error);
+    res.status(400).send(error)
   }
 };
 

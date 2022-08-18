@@ -42,7 +42,11 @@ const postUser = async (req, res) => {
   const { userName, email, password } = req.body;
   try {
     if (userName && email && password) {
-      const admin = await Admin.findOne({ where: { userName: userName } });
+      const admin = await Admin.findOne({ where: { [Op.and]: [{userName: userName},{email:email}] }});
+      if (admin) {
+        throw new TypeError("Error, User exist");
+      }
+
       if (admin) {
         throw new TypeError("Error, User exist");
       }
