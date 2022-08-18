@@ -31,6 +31,11 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM("New", "Used"),
         allowNull: false,
       },
+      isBanned:{
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      }
     },
     { timestamps: false }
   );

@@ -80,7 +80,7 @@ const controllerPut = async (req, res) => {
   const { id } = req.body;
   const name = new String(req.body.name);
   try {
-    if (id && req.body.hasOwnProperty("name") && name.length > 2) {
+    if (id && req.body.hasOwnProperty("name") && name.length > 2 && req.body.hasOwnProperty("isBanned")) {
       let category = await Category.findByPk(id);
       if (!category) {
         throw new TypeError("Error, Category Id not found");
@@ -99,12 +99,12 @@ const controllerDelete = async (req, res) => {
   const { id } = req.body;
   try {
     if (id) {
-      const deleteCategory = await Category.destroy({
-        where: { id: id },
-      });
+      const deleteCategory = await Category.findByPk(id);
       if (!deleteCategory) {
         throw new TypeError("Error, category Id not found");
       }
+      deleteCategory.isBanned = true;
+      await deleteCategory.save();
       res.status(200).send("category deleted");
     } else {
       throw new TypeError("Error, Category Id invalid");

@@ -64,12 +64,12 @@ const deleteInstrument = async (req, res) => {
   const { id } = req.body;
   try {
     if (id) {
-      const deleteInstrument = await Instrument.destroy({
-        where: { id: id },
-      });
+      const deleteInstrument = await Instrument.findByPk(id);
       if (!deleteInstrument) {
         throw new TypeError("Error, instrument not found with this Id");
       }
+      deleteInstrument.isBanned = true;
+      await deleteInstrument.save();
       res.status(200).send("Instrument deleted");
     } else {
       throw new TypeError("Error, The Id entered is not valid");
@@ -107,6 +107,7 @@ const putInstrument = async (req, res, next) => {
       stock,
       status,
       category,
+      isBanned
     } = req.body;
 
     if (
@@ -118,7 +119,8 @@ const putInstrument = async (req, res, next) => {
       !description ||
       !stock ||
       !status ||
-      !category
+      !category||
+      !isBanned
     )
       throw new TypeError("data sent incorrectly");
 

@@ -167,12 +167,12 @@ const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
     if (id) {
-      const deleteUser = await User.destroy({
-        where: { id: id },
-      });
+      const deleteUser = await User.findByPk(id);
       if (!deleteUser) {
         throw new TypeError("Error, User Id not found");
       }
+      deleteUser.rol = "banned";
+      await deleteUser.save();
       res.status(200).send("User deleted");
     } else {
       throw new TypeError("Error, User Id invalid");
