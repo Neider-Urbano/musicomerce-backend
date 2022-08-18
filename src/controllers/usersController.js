@@ -72,8 +72,6 @@ const putUser = async (req, res) => {
   const {
     email,
     userName,
-    password,
-    rol,
     dni,
     firstName,
     lastName,
@@ -117,7 +115,6 @@ const putUserAdmin = async (req, res) => {
   const {
     email,
     userName,
-    password,
     rol,
     dni,
     firstName,
@@ -129,7 +126,6 @@ const putUserAdmin = async (req, res) => {
     if (
       !email ||
       !userName ||
-      !password ||
       !rol ||
       !dni ||
       !firstName ||
@@ -146,7 +142,6 @@ const putUserAdmin = async (req, res) => {
       await User.findByPk(userToPut.id).then((result) => {
         result.email = email;
         result.userName = userName;
-        result.password = password;
         result.rol = rol;
         result.dni = dni;
         result.firstName = firstName;
