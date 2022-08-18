@@ -7,7 +7,7 @@ const paymentRouter = require("./paymentRoutes");
 const adminsRouter = require("./adminRoutes.js");
 const trolleyRouter = require("./trolleyRoutes.js");
 const mailController = require("./mailRoutes");
-
+const transactionsRouter=require("./transactionsRoutes.js")
 const router = Router();
 
 router.use("/category", categoryRouter);
@@ -18,5 +18,5 @@ router.use("/payment", paymentRouter);
 router.use("/admins", adminsRouter);
 router.use("/trolley", trolleyRouter);
 router.use("/mail", mailController);
-
+router.use("/transactions",transactionsRouter)
 module.exports = router;
