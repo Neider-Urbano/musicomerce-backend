@@ -3,9 +3,9 @@ const mailStructure = require("../mailing/estructure");
 const transporter = require("../mailing/mailing");
 
 const mailSignUp = async (req, res) => {
-  const { mail, userName, password } = req.body;
-  const mailSignup = new mailStructure(mail);
-  mailSignup.setTo(mail);
+  const { email, userName, password } = req.body;
+  const mailSignup = new mailStructure(email);
+  mailSignup.setTo(email);
   mailSignup.setSubject(`Bienvenido a MusciCommerce ${userName}`);
   mailSignup.setHtmlRegister(userName, password);
 
