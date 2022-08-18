@@ -68,9 +68,9 @@ const deleteAdmin = async (req, res) => {
 };
 
 const modifyAdmin = async (req, res) => {
-  const { id, userName, password, firstName, lastName, email,rol } = req.body;
+  const { id, userName, firstName, lastName, email,rol } = req.body;
   try {
-    if (!userName || !password || !firstName || !lastName || !email || !rol) {
+    if (!userName  || !firstName || !lastName || !email || !rol) {
       throw new Error("Error, Admin information incomplete!!");
     } else {
       let modifyAdmin = await Admin.findByPk(id);
@@ -82,7 +82,6 @@ const modifyAdmin = async (req, res) => {
       modifyAdmin.firstName = firstName;
       modifyAdmin.lastName = lastName;
       modifyAdmin.email = email;
-      modifyAdmin.password = password;
       modifyAdmin.rol = rol;
       
       await modifyAdmin.save();
