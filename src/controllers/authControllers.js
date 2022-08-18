@@ -68,10 +68,23 @@ const controllerLoginGoogle = async (req, res) => {
   
   try {
     const user = await User.findOne({ where: { userName: userName } });
+    const admin = await Admin.findOne({ where: { userName: userName } });
+
+    if (!user && !admin) {
+      throw new TypeError("User doesn't exist");
+    }
     
     if (user) {
       var token = jwt.sign(
         { user_id: user.id, user_rol: user.rol },
+        process.env.JWT_SECRET
+      );
+      return res.status(200).json({ token: token });
+    }
+
+    if (admin) {
+      var token = jwt.sign(
+        { user_id: admin.id, user_rol: admin.rol },
         process.env.JWT_SECRET
       );
       return res.status(200).json({ token: token });
