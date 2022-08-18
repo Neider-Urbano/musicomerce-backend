@@ -6,7 +6,7 @@ const {
   /* mailPurchase */
 } = require("../controllers/mailController");
 
-router.post("/", mailSignUp);
+router.post("/sign", mailSignUp);
 router.post("/profile", modifyUserProfile);
 //router.post("/purchase", mailPurchase);
 
