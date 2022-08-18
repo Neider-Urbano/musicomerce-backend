@@ -67,12 +67,6 @@ Cart.belongsToMany(Payment, {
   through: "Transaction",
 });
 
-/* User.hasMany(Instrument, {
-  onDelete: "cascade",
-  onUpdate: "cascade",
-  hooks: true,
-});
-Instrument.belongsTo(User); */
 
 module.exports = {
   ...sequelize.models,

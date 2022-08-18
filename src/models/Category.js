@@ -8,6 +8,11 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
+      isBanned:{
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      }
     },
     { timestamps: false }
   );

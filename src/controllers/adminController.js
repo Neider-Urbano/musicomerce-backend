@@ -11,7 +11,13 @@ const getAdmins = async (req, res) => {
       if (admins.length) return res.status(200).send(admins);
       else return res.status(400).send("Admin " + userName + " not found");
     } else {
-      let admins = await Admin.findAll();
+      let admins = await Admin.findAll({
+        where: {
+          id: {
+            [Op.ne]: req.user_id
+          }
+        }
+      });
       if (admins.length) return res.status(200).send(admins);
       else return res.status(200).send([]);
     }
@@ -46,12 +52,12 @@ const deleteAdmin = async (req, res) => {
   const { id } = req.body;
   try {
     if (id) {
-      const deleteAdmin = await Admin.destroy({
-        where: { id: id },
-      });
+      const deleteAdmin = await Admin.findByPk(id);
       if (!deleteAdmin) {
         throw new TypeError("Error, Admin Id not found");
       }
+      deleteAdmin.rol = "banned";
+      await deleteAdmin.save();
       res.status(200).send("Admin deleted");
     } else {
       throw new TypeError("Error, Admin Id invalid");
