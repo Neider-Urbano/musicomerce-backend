@@ -2,7 +2,6 @@ require("dotenv").config();
 const Config = require("./config");
 const { PASS_GMAIL, USER_GMAIL, HOST_GMAIL } = process.env;
 
-//! ESTO ES EL TRANSPORTER
 const transporter = new Config({
   host: HOST_GMAIL,
   port: 465,
