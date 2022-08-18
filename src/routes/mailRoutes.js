@@ -1,7 +1,13 @@
 const { Router } = require("express");
 const router = Router();
-const { mailSignUp } = require("../controllers/mailController");
+const {
+  mailSignUp,
+  modifyUserProfile,
+  /* mailPurchase */
+} = require("../controllers/mailController");
 
 router.post("/", mailSignUp);
+router.post("/profile", modifyUserProfile);
+//router.post("/purchase", mailPurchase);
 
 module.exports = router;
