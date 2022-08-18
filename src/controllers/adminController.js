@@ -1,4 +1,4 @@
-const { Admin } = require("../db");
+const { Admin,User } = require("../db");
 const { Op } = require("sequelize");
 
 const getAdmins = async (req, res) => {
@@ -35,9 +35,12 @@ const createtAdmin = async (req, res) => {
       password &&
       firstName &&
       lastName &&
-      email &&
       rol
     ) {
+      const user = await User.findOne({ where: { [Op.and]: [{userName: userName},{email:email}] }});
+      if (user) {
+        throw new TypeError("Error, Admin exist");
+      }
       await Admin.create(req.body);
       res.status(200).send("Admin created");
     } else {
