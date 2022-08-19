@@ -32,7 +32,7 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Instrument, Category, Admin, Cart, Payment,User,Trolley,Transactions} = sequelize.models;
+const { Instrument, Category, Admin, Cart, Payment,User,Trolley,Transactions,Raiting} = sequelize.models;
 
 Admin.hasMany(Instrument);
 Instrument.belongsTo(Admin);
@@ -50,6 +50,8 @@ User.belongsTo(Transactions,{
   hooks: true,
 })
 
+Instrument.hasMany(Raiting)
+Raiting.belongsTo(Instrument)
 
 User.belongsToMany(Instrument, {
   through: Trolley,
