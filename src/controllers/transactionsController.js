@@ -7,7 +7,7 @@ const get_transactions=async(req,res)=>{
             include:{model:User}
         })
             console.log(usersr)
-            res.send(usersr)
+            res.status(200).send(usersr)
     } catch (error) {
         res.status(400).send(error)
     }
