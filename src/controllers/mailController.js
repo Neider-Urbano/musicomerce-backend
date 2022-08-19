@@ -58,12 +58,28 @@ const modifyUserProfile = async (req, res) => {
   res.status(200).send("Mail enviado");
 };
 
-/* const mailPurchase = async (req, res) => {
-  const {} = req.body;
-}; */
+const mailPurchase = async (req, res) => {
+  const { name, email, phone, address, city, country, zip, total, items } =
+    req.body;
+
+  const mailShop = new mailStructure(email);
+  mailShop.setTo(email);
+  mailShop.setSubject(`Resumen de tu compra`);
+  mailShop.setHtmlShop(name, phone, address, city, country, zip, total, items);
+
+  const info = {
+    from: mailShop.from,
+    to: mailShop.to,
+    subject: mailShop.subject,
+    html: mailShop.html,
+  };
+
+  await transporter.sendMail(info);
+  res.status(200).send("Mail enviado");
+};
 
 module.exports = {
   mailSignUp,
   modifyUserProfile,
-  //mailPurchase
+  mailPurchase,
 };

@@ -1,6 +1,6 @@
 class mailStructure {
   constructor(to) {
-    (this.from = '"Tigers Developers 💻👱🏼" <tigersdevelopers22@gmail.com>'),
+    (this.from = '"MusiCommerce Store" <musicommercestore@gmail.com>'),
       (this.to = to),
       (this.subject = ""),
       (this.text = ""),
@@ -29,9 +29,39 @@ class mailStructure {
             <a href="https://www.google.com">Ir a Musiccomerce</a>
     </div>`;
   }
-  setHtmlShop(data) {
-    this.html = data;
+  setHtmlShop(name, phone, address, city, country, zip, total, items) {
+    this.html = `
+    <h2 style="color:#2B4570">RESUMEN DE TU COMPRA</h2>
+    </br>
+    <div>
+      <h3 style="color:#2B4570">DATOS DE ENVÍO</h3>
+      </p>
+      <p><b style="color:#5497A7">Nombre: </b>${name}</p>
+      <p><b style="color:#5497A7">Telefono: </b>${phone}</p>
+      <p><b style="color:#5497A7">Dirección: </b>${address}</p>
+      <p><b style="color:#5497A7">Ciudad: </b>${city}</p>
+      <p><b style="color:#5497A7">Pais: </b>${country}</p>
+      <p><b style="color:#5497A7">Zip: </b>${zip}</p>
+    </div>
+    </br>
+    </br>
+    <div>
+      <h3 style="color:#2B4570">PRODUCTOS</h3>
+      <div>${items.map(
+        (e) =>
+          `<img src= ${e.img} style= "height:150px" "width=150px"/>
+        <p><b style="color:#5497A7">Instrumento:</b> ${e.name}</p>
+        <p><b style="color:#5497A7">Unidades:</b> ${e.count}</p>
+        <p><b style="color:#5497A7">Precio Unitario:</b> $${e.price}</p>
+        `
+      )}
+      </div>
+    </div>
+    </br>
+    </br>
+    <h2 style="color:#2B4570"> Toal pagado: $${total}</h2>`;
   }
+
   setHtmlUpdate(
     userName,
     password,
