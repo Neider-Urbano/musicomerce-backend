@@ -13,7 +13,26 @@ const get_transactions=async(req,res)=>{
     }
 }
 
+const get_user_transactions=async(req,res)=>{
+    try {
+        let userHistoryShop = await Transactions.findAll(
+            {
+                where:{userId: req.user_id}
+            },
+            {
+                include:{model: User}
+            }
+        )
+        console.log(userHistoryShop)
+        res.send(userHistoryShop)
+
+    } catch (error) {
+        res.status(400).send(error)
+    }
+}
+
 
 module.exports = {
-    get_transactions
+    get_transactions,
+    get_user_transactions
 }
