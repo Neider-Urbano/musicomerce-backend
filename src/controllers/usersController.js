@@ -181,6 +181,22 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const deleteUserAccount = async (req, res) => {
+  let id = req.user_id;
+  try {
+    const userDeleted = await User.destroy({
+      where:{
+        id: id
+      }
+    })
+    res.status(200).send("User deleted");
+ 
+  } catch (e) {
+    return res.status(400).send(e.message);
+  }
+};
+
+
 module.exports = {
   postUser,
   postUsersAll,
@@ -188,5 +204,6 @@ module.exports = {
   getUserToken,
   deleteUser,
   putUser,
-  putUserAdmin
+  putUserAdmin, 
+  deleteUserAccount
 };
