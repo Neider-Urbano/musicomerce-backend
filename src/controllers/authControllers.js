@@ -67,8 +67,8 @@ const controllerLoginGoogle = async (req, res) => {
   const { userName, email } = req.body;
   
   try {
-    const user = await User.findOne({ where: { userName: userName } });
-    const admin = await Admin.findOne({ where: { userName: userName } });
+    const user = await User.findOne({ where: { email: email } });
+    const admin = await Admin.findOne({ where: { email: email } });
 
     if (!user && !admin) {
       throw new TypeError("User doesn't exist");
