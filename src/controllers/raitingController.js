@@ -12,15 +12,21 @@ async function add_raiting(req,res) {
         if(!instrumentId||!comment||!star) return res.status(400).send("datos missins")
         let usuario= await User.findByPk(user_id)
     
-        let instrumentoCalificado=await Instrument.findByPk(instrumentId)
+        let instrumentoCalificado=await Instrument.findByPk(instrumentId,{
+            include:{model:Raiting}
+        })
+        for (let i = 0; i < instrumentoCalificado.dataValues.Raitings.length; i++) { 
+            if (instrumentoCalificado.dataValues.Raitings[i].dataValues.userId == user_id) {
+                return res.status(400).send("You already rated this purchase")
+            }
+            
+        }
+        // res.send("instrumento calificado")
         
-        
-        let creado= await Raiting.create({userName:usuario.userName,instrumentId,comment:comment,star,userId:user_id})
-        // raiting=(sum_of_rating * 5)/sum_of_max_rating_of_user_count
+        let creado= await Raiting.create({userName:usuario.userName,instrumentId,comment:comment,star,userId:user_id});
         creado.setInstrument(instrumentoCalificado)
         await creado.save()
-        // let reto=await Instrument.findByPk(instrumentId)
-        // res.send(reto)
+        
         res.send("instrument qualified") 
     } catch (error) {
         res.status(400).send(error)

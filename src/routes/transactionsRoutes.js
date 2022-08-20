@@ -5,7 +5,7 @@ const {get_transactions, get_user_transactions}=require("../controllers/transact
 const { verifyTokenAdmin } = require("../middlewares/authjwtAdmin");
 
 router.get("/",[verifyTokenAdmin],get_transactions)
-router.get("/", [verifyToken], get_user_transactions)
+router.get("/user", [verifyToken], get_user_transactions)
 
 
 module.exports = router;
