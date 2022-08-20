@@ -78,8 +78,28 @@ const mailPurchase = async (req, res) => {
   res.status(200).send("Mail enviado");
 };
 
+const mailNewsletter = async (req, res) => {
+  const { email } = req.body;
+
+  const mailNews = new mailStructure(email);
+  mailNews.setTo(email);
+  mailNews.setSubject("Bienvenido a nuestro Newsletter");
+  mailNews.setNewsletter(email);
+
+  const info = {
+    from: mailNews.from,
+    to: mailNews.to,
+    subject: mailNews.subject,
+    html: mailNews.html,
+  };
+
+  await transporter.sendMail(info);
+  res.status(200).send("Mail enviado");
+};
+
 module.exports = {
   mailSignUp,
   modifyUserProfile,
   mailPurchase,
+  mailNewsletter,
 };

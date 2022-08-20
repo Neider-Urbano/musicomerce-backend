@@ -88,6 +88,16 @@ class mailStructure {
             </div>
     </div>`;
   }
+
+  setNewsletter(email) {
+    this.html = `
+    <div>
+      <h1>Gracias por tu suscripcion a MusiCommerce</h1>
+      <h3>Te mantendremos informad@</h3>
+      <p>${email}</p>
+    </div>
+    `;
+  }
 }
 
 module.exports = mailStructure;
