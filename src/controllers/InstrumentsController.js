@@ -1,4 +1,4 @@
-const { Instrument, Category } = require("../db.js");
+const { Instrument, Category,Raiting } = require("../db.js");
 const { Op } = require("sequelize");
 
 const postInstrument = async (req, res, next) => {
@@ -84,7 +84,7 @@ const getIdInstrument = async (req, res) => {
   try {
     if (id) {
       const idInstrument = await Instrument.findByPk(id, {
-        include: { model: Category },
+        include: { model: Category,model:Raiting },
       });
       idInstrument
         ? res.status(200).send(idInstrument)

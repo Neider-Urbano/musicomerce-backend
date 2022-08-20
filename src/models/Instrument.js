@@ -35,6 +35,10 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+      },
+      raiting:{
+        type:DataTypes.INTEGER(),
+        allowNull:true
       }
     },
     { timestamps: false }
