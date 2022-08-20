@@ -96,10 +96,10 @@ const modifyAdmin = async (req, res) => {
 };
 
 const getAdminById = async (req, res) => {
-  const { id } = req.params;
+  const { user_id } = req;
   try {
-    if (id) {
-      const idAdmin = await Admin.findByPk(id);
+    if (user_id) {
+      const idAdmin = await Admin.findByPk(user_id);
       idAdmin
         ? res.status(200).send(idAdmin)
         : res.status(404).send(`Admin ${id} not found`);
