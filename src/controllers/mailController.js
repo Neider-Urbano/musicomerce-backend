@@ -24,9 +24,8 @@ const mailSignUp = async (req, res) => {
 const modifyUserProfile = async (req, res) => {
   const {
     email,
-    userName,
-    password,
-    dni,
+    //userName,
+    //password,
     firstName,
     lastName,
     contactNumber,
@@ -36,11 +35,10 @@ const modifyUserProfile = async (req, res) => {
   const userProfile = new mailStructure(email);
 
   userProfile.setTo(email);
-  userProfile.setSubject(`${userName} has actualizado tu perfil`);
+  userProfile.setSubject(`Has actualizado tu perfil`);
   userProfile.setHtmlUpdate(
-    userName,
-    password,
-    dni,
+    //userName,
+    //password,
     firstName,
     lastName,
     contactNumber,

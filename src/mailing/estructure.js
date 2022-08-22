@@ -63,9 +63,8 @@ class mailStructure {
   }
 
   setHtmlUpdate(
-    userName,
-    password,
-    dni,
+    //userName,
+    //password,
     firstName,
     lastName,
     contactNumber,
@@ -79,11 +78,8 @@ class mailStructure {
               <ul>
                 <li>Nombre: ${firstName}</li>
                 <li>Apellido: ${lastName}</li>
-                <li>DNI: ${dni}</li>
                 <li>Numero de contacto: ${contactNumber}</li>
                 <li>Direccion: ${buyerAddress}</li>
-                <li>User: ${userName}</li>
-                <li>Password: ${password}</li>
               </ul>
             </div>
     </div>`;
