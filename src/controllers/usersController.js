@@ -74,9 +74,6 @@ const postUsersAll = async (req, res) => {
 
 const putUser = async (req, res) => {
   const {
-    email,
-    userName,
-    dni,
     firstName,
     lastName,
     contactNumber,
@@ -84,9 +81,6 @@ const putUser = async (req, res) => {
   } = req.body;
   try {
     if (
-      !email ||
-      !userName ||
-      !dni ||
       !firstName ||
       !lastName ||
       !contactNumber ||
@@ -99,9 +93,6 @@ const putUser = async (req, res) => {
         throw new Error({error:"Error, User doesn't exist"});
       }
       await User.findByPk(req.user_id).then((result) => {
-        result.email = email;
-        result.userName = userName;
-        result.dni = dni;
         result.firstName = firstName;
         result.lastName = lastName;
         result.contactNumber = contactNumber;
@@ -117,10 +108,10 @@ const putUser = async (req, res) => {
 
 const putUserAdmin = async (req, res) => {
   const {
-    email,
-    userName,
+    //email,
+    //userName,
     rol,
-    dni,
+    //dni,
     firstName,
     lastName,
     contactNumber,
@@ -128,10 +119,10 @@ const putUserAdmin = async (req, res) => {
   } = req.body;
   try {
     if (
-      !email ||
-      !userName ||
+      //!email ||
+      //!userName ||
       !rol ||
-      !dni ||
+      //!dni ||
       !firstName ||
       !lastName ||
       !contactNumber ||
@@ -144,10 +135,10 @@ const putUserAdmin = async (req, res) => {
         throw new Error("Error, User doesn't exist");
       }
       await User.findByPk(userToPut.id).then((result) => {
-        result.email = email;
-        result.userName = userName;
+        //result.email = email;
+        //result.userName = userName;
         result.rol = rol;
-        result.dni = dni;
+        //result.dni = dni;
         result.firstName = firstName;
         result.lastName = lastName;
         result.contactNumber = contactNumber;
