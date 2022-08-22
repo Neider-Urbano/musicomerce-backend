@@ -94,6 +94,27 @@ class mailStructure {
     </div>
     `;
   }
+
+  setResetPassword(email, token) {
+    this.html = `
+    <div>
+      <h1>Cambio de constrseña</h1>
+      <h3>Has solicitado un cambio de cotraseña desde tu correo ${email}</h3>
+      <h3>Da click en el siguiente enlace:</h3>
+      <p>http://localhost:3000/user/resetpassword</p>
+    </div>
+    `;
+  }
+
+  setPassReseted(pass) {
+    this.html = `
+  <div>
+    <h1>Cambio de contraseña exitoso</h1>
+    <h4>Su contraseñanueva constraseña: </h4>
+    <p>${pass}</p>
+  </div>
+  `;
+  }
 }
 
 module.exports = mailStructure;
