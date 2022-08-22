@@ -5,7 +5,7 @@ const {add_raiting,get_raiting} = require("../controllers/raitingController")
 
 router.post("/",[verifyToken],add_raiting)
 
-router.get("/",get_raiting)
+router.get("/",[verifyToken],get_raiting)
 
 
 module.exports = router;
