@@ -42,7 +42,9 @@ const postUser = async (req, res) => {
   const { userName, email, password } = req.body;
   try {
     if (userName && email && password) {
-      const admin = await Admin.findOne({ where: { [Op.and]: [{userName: userName},{email:email}] }});
+      const admin = await Admin.findOne({
+        where: { [Op.and]: [{ userName: userName }, { email: email }] },
+      });
       if (admin) {
         throw new TypeError("Error, User exist");
       }
@@ -73,24 +75,14 @@ const postUsersAll = async (req, res) => {
 };
 
 const putUser = async (req, res) => {
-  const {
-    firstName,
-    lastName,
-    contactNumber,
-    buyerAddress,
-  } = req.body;
+  const { firstName, lastName, contactNumber, buyerAddress } = req.body;
   try {
-    if (
-      !firstName ||
-      !lastName ||
-      !contactNumber ||
-      !buyerAddress
-    ) {
-      throw new Error({error: "Error, User information incomplete!!"});
+    if (!firstName || !lastName || !contactNumber || !buyerAddress) {
+      throw new Error({ error: "Error, User information incomplete!!" });
     } else {
       let userToPut = await User.findByPk(req.user_id);
       if (!userToPut) {
-        throw new Error({error:"Error, User doesn't exist"});
+        throw new Error({ error: "Error, User doesn't exist" });
       }
       await User.findByPk(req.user_id).then((result) => {
         result.firstName = firstName;
@@ -98,7 +90,7 @@ const putUser = async (req, res) => {
         result.contactNumber = contactNumber;
         result.buyerAddress = buyerAddress;
         result.save();
-        return res.status(200).send({ok:"User information updated :)"});
+        return res.status(200).send({ ok: "User information updated :)" });
       });
     }
   } catch (e) {
@@ -152,7 +144,6 @@ const putUserAdmin = async (req, res) => {
   }
 };
 
-
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   try {
@@ -176,17 +167,58 @@ const deleteUserAccount = async (req, res) => {
   let id = req.user_id;
   try {
     const userDeleted = await User.destroy({
-      where:{
-        id: id
-      }
-    })
+      where: {
+        id: id,
+      },
+    });
     res.status(200).send("User deleted");
- 
   } catch (e) {
     return res.status(400).send(e.message);
   }
 };
 
+const getUserMail = async (req, res) => {
+  const { email } = req.body;
+  try {
+    let user = await User.findByPk(req.user_id);
+    console.log("ID USUARIO", user.id);
+    if (user) {
+      if (user.email == email) {
+        res.status(200).send(user.email);
+        console.log("EL CORREO", user.email);
+      } else {
+        res.send("EMAIL NO ECNONTRADO");
+      }
+    }
+  } catch (error) {}
+};
+
+const putPasswordUser = async (req, res) => {
+  const { email, pass } = req.body;
+  try {
+    if (!email || !pass) {
+      throw new Error({ error: "Error, User information incomplete!!" });
+    } else {
+      let userToPut = await User.findOne({ where: { email: email } });
+      if (!userToPut) {
+        throw new Error({ error: "Error, User doesn't exist" });
+      }
+      await User.findByPk({ where: { email: email } }).then((result) => {
+        console.log("EMAIL", email);
+        result.email = email;
+        result.password = pass;
+        /* set(pass) {
+          const hash = bcrypt.hashSync(pass, 10);
+          this.setDataValue("password", hash);
+        }; */
+        result.save();
+        return res.status(200).send({ ok: "User information updated :)" });
+      });
+    }
+  } catch (e) {
+    return res.status(400).send(e.message);
+  }
+};
 
 module.exports = {
   postUser,
@@ -195,6 +227,8 @@ module.exports = {
   getUserToken,
   deleteUser,
   putUser,
-  putUserAdmin, 
-  deleteUserAccount
+  putUserAdmin,
+  deleteUserAccount,
+  putPasswordUser,
+  getUserMail,
 };

@@ -28,9 +28,20 @@
       "lastName": "Restrepo",
       "contactNumber": 889798765465,
       "buyerAddress": "avenida pre viva 453",
-      "email": "pedrito1torres@gmail.com",
+      "email": "oscar.restrepo2@gmail.com",
       "userName": "oscar123",
       "password": "oscar123",
+      "rol": "user"
+    },
+    {
+      "dni": 887899879878787,
+      "firstName": "Usuario",
+      "lastName": "De Prueba",
+      "contactNumber": 889798765465,
+      "buyerAddress": "avenida pre viva 453",
+      "email": "einvestor2021@gmail.com",
+      "userName": "usuarioPrueba",
+      "password": "usuario123",
       "rol": "user"
     }
   ]
