@@ -1,10 +1,35 @@
 const {Raiting,User,Instrument}=require("../db")
 
-// {
-//     "instrumentId":3,
-//     "comment":"asdasdad",
-//     "star":5
-//   }
+async function PromedioRaiting(instrumentId,star) {
+    try {
+        let instrumento = await Instrument.findByPk(instrumentId,{
+            include:{model:Raiting}
+        })
+        let SumaCalificaciones=0;
+        
+        if (instrumento.dataValues.Raitings.length) {
+            for (let i = 0; i < instrumento.dataValues.Raitings.length; i++) {
+                SumaCalificaciones=SumaCalificaciones+instrumento.dataValues.Raitings[i].star
+            }
+            let final=parseInt(SumaCalificaciones/instrumento.dataValues.Raitings.length)
+            instrumento.set({raiting:final})
+            await instrumento.save() 
+        }else{
+                instrumento.set({raiting:star})
+                await instrumento.save()
+                console.log("el instrumento se caliico con: "+star)
+        }
+        
+    } catch (error) {
+        console.log("fallo al crear el promedio del raiting")
+    }
+}
+
+
+
+
+
+
 async function add_raiting(req,res) {
     try {
         let user_id=req.user_id;
@@ -21,11 +46,14 @@ async function add_raiting(req,res) {
             }
             
         }
-        // res.send("instrumento calificado")
+       
         
         let creado= await Raiting.create({userName:usuario.userName,instrumentId,comment:comment,star,userId:user_id});
         creado.setInstrument(instrumentoCalificado)
         await creado.save()
+
+         await PromedioRaiting(instrumentId,star)
+
         
         res.send("instrument qualified") 
     } catch (error) {
@@ -35,11 +63,17 @@ async function add_raiting(req,res) {
 
 
 async function get_raiting(req,res){
-    let rating=await Raiting.findAll({
-        include:{model:Instrument}
-    })
-
-    res.send(rating)
+    try {
+        let user_id=req.user_id;
+        let rating=await Raiting.findAll({
+            where:{userId:user_id}
+        })
+    
+        res.send(rating)
+        
+    } catch (error) {
+        res.status(400).send(error)
+    }
 }
 
 
