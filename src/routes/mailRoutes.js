@@ -5,6 +5,8 @@ const {
   modifyUserProfile,
   mailPurchase,
   mailNewsletter,
+  mailResetPassword,
+  mailPassReseted,
 } = require("../controllers/mailController");
 
 router.post("/sign", mailSignUp);
