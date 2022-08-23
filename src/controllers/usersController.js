@@ -2,6 +2,7 @@ const { User, Admin, Instrument } = require("../db");
 const { users } = require("../users.json");
 const { Op } = require("sequelize");
 const { verifyToken } = require("../middlewares/authjwt");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res) => {
   try {
@@ -200,26 +201,43 @@ const putPasswordUser = async (req, res) => {
       throw new Error({ error: "Error, User information incomplete!!" });
     } else {
       let userToPut = await User.findOne({ where: { email: email } });
-      if (!userToPut) {
-        throw new Error({ error: "Error, User doesn't exist" });
-      }
-      await User.findByPk({ where: { email: email } }).then((result) => {
-        console.log("EMAIL", email);
-        result.email = email;
-        result.password = pass;
-        /* set(pass) {
-          const hash = bcrypt.hashSync(pass, 10);
-          this.setDataValue("password", hash);
-        }; */
-        result.save();
-        return res.status(200).send({ ok: "User information updated :)" });
-      });
+      userToPut
+        ? await User.findOne({ where: { email: email } }).then((result) => {
+            result.email = email;
+            result.set({ password: pass });
+
+            result.save().then(() => {
+              return res
+                .status(200)
+                .send({ ok: "User information updated :)" });
+            });
+          })
+        : await Admin.findOne({ where: { email: email } }).then((result) => {
+            result.email = email;
+            result.set({ password: pass });
+
+            result.save().then(() => {
+              return res
+                .status(200)
+                .send({ ok: "Admin information updated :)" });
+            });
+          });
     }
   } catch (e) {
     return res.status(400).send(e.message);
   }
 };
 
+/* if (!userToPut) {
+  await Admin.findOne({ where: { email: email } }).then((result) => {
+    result.email = email;
+    result.set({ password: pass });
+
+    result.save().then(() => {
+      return res.status(200).send({ ok: "Admin information updated :)" });
+    });
+  });
+} */
 module.exports = {
   postUser,
   postUsersAll,

@@ -1,6 +1,14 @@
 {
   "admins": [
     {
+      "userName": "admin",
+      "password": "admin123",
+      "firstName": "Oscar",
+      "lastName": "Restrepo",
+      "email": "einvestor2021@gmail.com",
+      "rol": "admin"
+    },
+    {
       "userName": "neider29",
       "password": "urban12*",
       "firstName": "Neider",
