@@ -72,14 +72,14 @@ class mailStructure {
   ) {
     this.html = `
     <div>
-            <h1>Tus datos han sido actualizados</h1>
+            <h1 style="color:#2B4570">HAS ACTUALIZADO TU PERFIL</h1>
             <div>
-              <h3>Este es un resumen de tu perfil</h3>
+              <h3 style="color:#2B4570" >Este es un resumen de tus cambios</h3>
               <ul>
-                <li>Nombre: ${firstName}</li>
-                <li>Apellido: ${lastName}</li>
-                <li>Numero de contacto: ${contactNumber}</li>
-                <li>Direccion: ${buyerAddress}</li>
+                <P><b style="color:#5497A7">Nombre</b>: ${firstName}</P>
+                <P><b style="color:#5497A7">Apellido:</b> ${lastName}</P>
+                <P><b style="color:#5497A7">Numero de contacto:</b> ${contactNumber}</P>
+                <P><b style="color:#5497A7">Direccion:<b> ${buyerAddress}</P>
               </ul>
             </div>
     </div>`;
@@ -88,7 +88,7 @@ class mailStructure {
   setNewsletter(email) {
     this.html = `
     <div>
-      <h1>Gracias por tu suscripcion a MusiCommerce</h1>
+      <h1 style="color:#2B4570">Gracias por tu suscripción a MusiCommerce</h1>
       <h3>Te mantendremos informad@</h3>
       <p>${email}</p>
     </div>
@@ -98,8 +98,8 @@ class mailStructure {
   setResetPassword(email, token) {
     this.html = `
     <div>
-      <h1>Cambio de constrseña</h1>
-      <h3>Has solicitado un cambio de cotraseña desde tu correo ${email}</h3>
+      <h1 style="color:#2B4570">CAMBIO DE CONTRASEÑA</h1>
+      <h3 style="color:#2B4570" >Has solicitado un cambio de cotraseña desde tu correo ${email}</h3>
       <h3>Da click en el siguiente enlace:</h3>
       <p>http://localhost:3000/user/resetpassword</p>
     </div>
@@ -109,8 +109,8 @@ class mailStructure {
   setPassReseted(pass) {
     this.html = `
   <div>
-    <h1>Cambio de contraseña exitoso</h1>
-    <h4>Su contraseñanueva constraseña: </h4>
+    <h1 style="color:#2B4570">Cambio de contraseña exitoso</h1>
+    <h4>Esta es tu nueva constraseña: </h4>
     <p>${pass}</p>
   </div>
   `;
