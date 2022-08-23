@@ -46,7 +46,7 @@ class mailStructure {
     </br>
     </br>
     <div>
-      <h3 style="color:#2B4570">PRODUCTOS</h3>
+      <h3 style="color:#2B4570">PRODUCTS</h3>
       <div>${items.map(
         (e) =>
           `<img src= ${e.img} style= "height:150px" "width=150px"/>
