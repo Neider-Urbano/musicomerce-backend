@@ -96,12 +96,31 @@ const mailNewsletter = async (req, res) => {
 };
 
 const mailResetPassword = async (req, res) => {
-  const { email, token } = req.body;
+  const { email } = req.body;
 
   const mailPassword = new mailStructure(email);
   mailPassword.setTo(email);
   mailPassword.setSubject("Solicitud Nueva Contraseña");
-  mailPassword.setResetPassword(email, token);
+  mailPassword.setResetPassword(email);
+
+  const info = {
+    from: mailPassword.from,
+    to: mailPassword.to,
+    subject: mailPassword.subject,
+    html: mailPassword.html,
+  };
+
+  await transporter.sendMail(info);
+  res.status(200).send("Mail enviado");
+};
+
+const mailAdmin = async (req, res) => {
+  const { email } = req.body;
+
+  const mailPassword = new mailStructure(email);
+  mailPassword.setTo(email);
+  mailPassword.setSubject("Solicitud Nueva Contraseña");
+  mailPassword.setResetPasswordAdmin(email);
 
   const info = {
     from: mailPassword.from,
@@ -140,4 +159,5 @@ module.exports = {
   mailNewsletter,
   mailResetPassword,
   mailPassReseted,
+  mailAdmin,
 };

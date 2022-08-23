@@ -115,6 +115,17 @@ class mailStructure {
   </div>
   `;
   }
+
+  setResetPasswordAdmin(email) {
+    this.html = `
+    <div>
+    <h1 style="color:#2B4570">PASSWORD CHANGE</h1>
+    <h3 style="color:#2B4570" >You have requested a password change from your email ${email}</h3>
+    <h3>Click on the following link:</h3>
+    <p>http://localhost:3000/admin/resetpassword</p>
+  </div>
+  `;
+  }
 }
 
 module.exports = mailStructure;
