@@ -17,11 +17,11 @@ async function PromedioRaiting(instrumentId,star) {
         }else{
                 instrumento.set({raiting:star})
                 await instrumento.save()
-                console.log("el instrumento se caliico con: "+star)
+                console.log("The instrument rating was: "+star)
         }
         
     } catch (error) {
-        console.log("fallo al crear el promedio del raiting")
+        console.log("Failed to create average rating")
     }
 }
 
@@ -34,7 +34,7 @@ async function add_raiting(req,res) {
     try {
         let user_id=req.user_id;
         let {instrumentId,comment,star}=req.body
-        if(!instrumentId||!comment||!star) return res.status(400).send("datos missins")
+        if(!instrumentId||!comment||!star) return res.status(400).send("Some data is missing")
         let usuario= await User.findByPk(user_id)
     
         let instrumentoCalificado=await Instrument.findByPk(instrumentId,{
@@ -42,7 +42,7 @@ async function add_raiting(req,res) {
         })
         for (let i = 0; i < instrumentoCalificado.dataValues.Raitings.length; i++) { 
             if (instrumentoCalificado.dataValues.Raitings[i].dataValues.userId == user_id) {
-                return res.status(400).send("You already rated this purchase")
+                return res.status(400).send("You already rated this instrument")
             }
             
         }
@@ -55,7 +55,7 @@ async function add_raiting(req,res) {
          await PromedioRaiting(instrumentId,star)
 
         
-        res.send("instrument qualified") 
+        res.send("Instrument rated") 
     } catch (error) {
         res.status(400).send(error)
     }
