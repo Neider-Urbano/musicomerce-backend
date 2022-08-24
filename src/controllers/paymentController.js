@@ -68,8 +68,8 @@ const handlePayStripe = async (req, res) => {
       res.json(answer.status);
     })
     .catch((err) => {
-      console.log("ERRRRR:", err.status);
-      res.json(err.status);
+      console.log("ERRRRR:", err.raw.message);
+      res.status(400).send(err.raw.message);
     });
 };
 
