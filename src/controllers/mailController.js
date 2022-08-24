@@ -6,7 +6,7 @@ const mailSignUp = async (req, res) => {
   const { email, userName, password } = req.body;
   const mailSignup = new mailStructure(email);
   mailSignup.setTo(email);
-  mailSignup.setSubject(`Bienvenido a MusciCommerce ${userName}`);
+  mailSignup.setSubject(`Welcome to MusiCommerce ${userName}`);
   mailSignup.setHtmlRegister(userName, password);
 
   const info = {
@@ -17,7 +17,7 @@ const mailSignUp = async (req, res) => {
   };
 
   await transporter.sendMail(info);
-  res.status(200).send("Mail enviado");
+  res.status(200).send("Mail send");
   /* .catch(res.status(404).send("Algo salio mal")); */
 };
 
@@ -35,7 +35,7 @@ const modifyUserProfile = async (req, res) => {
   const userProfile = new mailStructure(email);
 
   userProfile.setTo(email);
-  userProfile.setSubject(`Has actualizado tu perfil`);
+  userProfile.setSubject(`Your profiled has been updated`);
   userProfile.setHtmlUpdate(
     //userName,
     //password,
@@ -53,7 +53,7 @@ const modifyUserProfile = async (req, res) => {
   };
 
   await transporter.sendMail(info);
-  res.status(200).send("Mail enviado");
+  res.status(200).send("Mail send");
 };
 
 const mailPurchase = async (req, res) => {
@@ -62,7 +62,7 @@ const mailPurchase = async (req, res) => {
 
   const mailShop = new mailStructure(email);
   mailShop.setTo(email);
-  mailShop.setSubject(`Resumen de tu compra`);
+  mailShop.setSubject(`Your purchase summary`);
   mailShop.setHtmlShop(name, phone, address, city, country, zip, total, items);
 
   const info = {
@@ -73,7 +73,7 @@ const mailPurchase = async (req, res) => {
   };
 
   await transporter.sendMail(info);
-  res.status(200).send("Mail enviado");
+  res.status(200).send("Mail send");
 };
 
 const mailNewsletter = async (req, res) => {
@@ -81,7 +81,7 @@ const mailNewsletter = async (req, res) => {
 
   const mailNews = new mailStructure(email);
   mailNews.setTo(email);
-  mailNews.setSubject("Bienvenido a nuestro Newsletter");
+  mailNews.setSubject("Welcome to our Newsletter");
   mailNews.setNewsletter(email);
 
   const info = {
@@ -92,7 +92,7 @@ const mailNewsletter = async (req, res) => {
   };
 
   await transporter.sendMail(info);
-  res.status(200).send("Mail enviado");
+  res.status(200).send("Mail send");
 };
 
 const mailResetPassword = async (req, res) => {
@@ -100,7 +100,7 @@ const mailResetPassword = async (req, res) => {
 
   const mailPassword = new mailStructure(email);
   mailPassword.setTo(email);
-  mailPassword.setSubject("Solicitud Nueva Contraseña");
+  mailPassword.setSubject("New Password Request");
   mailPassword.setResetPassword(email);
 
   const info = {
@@ -111,7 +111,7 @@ const mailResetPassword = async (req, res) => {
   };
 
   await transporter.sendMail(info);
-  res.status(200).send("Mail enviado");
+  res.status(200).send("Mail send");
 };
 
 const mailAdmin = async (req, res) => {
@@ -119,7 +119,7 @@ const mailAdmin = async (req, res) => {
 
   const mailPassword = new mailStructure(email);
   mailPassword.setTo(email);
-  mailPassword.setSubject("Solicitud Nueva Contraseña");
+  mailPassword.setSubject("New Password Request");
   mailPassword.setResetPasswordAdmin(email);
 
   const info = {
@@ -130,7 +130,7 @@ const mailAdmin = async (req, res) => {
   };
 
   await transporter.sendMail(info);
-  res.status(200).send("Mail enviado");
+  res.status(200).send("Mail send");
 };
 
 const mailPassReseted = async (req, res) => {
@@ -138,7 +138,7 @@ const mailPassReseted = async (req, res) => {
 
   const passRested = new mailStructure(email);
   passRested.setTo(email);
-  passRested.setSubject("Contraseña Actualizada");
+  passRested.setSubject("Password updated");
   passRested.setPassReseted(pass);
 
   const info = {
@@ -149,7 +149,7 @@ const mailPassReseted = async (req, res) => {
   };
 
   await transporter.sendMail(info);
-  res.status(200).send("Mail enviado");
+  res.status(200).send("Mail send");
 };
 
 module.exports = {
