@@ -1,4 +1,4 @@
-const { Instrument, Category,Raiting } = require("../db.js");
+const { Instrument, Category, Raiting } = require("../db.js");
 const { Op } = require("sequelize");
 
 const postInstrument = async (req, res, next) => {
@@ -84,7 +84,7 @@ const getIdInstrument = async (req, res) => {
   try {
     if (id) {
       const idInstrument = await Instrument.findByPk(id, {
-        include: { model: Category,model:Raiting },
+        include: { model: Category, model: Raiting },
       });
       idInstrument
         ? res.status(200).send(idInstrument)
@@ -97,13 +97,39 @@ const getIdInstrument = async (req, res) => {
 
 const putInstrument = async (req, res) => {
   try {
-    const {id,name,brand,price,img,description,stock,status,category,isBanned} = req.body;
+    const {
+      id,
+      name,
+      brand,
+      price,
+      img,
+      description,
+      stock,
+      status,
+      category,
+      isBanned,
+    } = req.body;
 
-    if (!id ||!name ||!brand ||!price ||!img ||!description ||!stock ||!status ||!category|| isBanned===null){
+    if (
+      !id ||
+      !name ||
+      !brand ||
+      !price ||
+      !img ||
+      !description ||
+      !stock ||
+      !status ||
+      !category ||
+      isBanned === null
+    ) {
       throw new TypeError("data sent incorrectly");
     }
+
+    /*  */
+
     let instrument = await Instrument.findByPk(parseInt(id));
     if (!instrument) throw new TypeError("incorrect id");
+
     await instrument.update({
       name,
       brand,
@@ -112,8 +138,9 @@ const putInstrument = async (req, res) => {
       description,
       stock: parseInt(stock),
       status,
-      isBanned
+      isBanned: stock == 0 ? true : false,
     });
+
     let newInstrumentCategory = await Category.findOne({
       where: {
         name: category,
@@ -126,7 +153,7 @@ const putInstrument = async (req, res) => {
     instrument.save();
     res.status(200).send("successfully edited");
   } catch (error) {
-    res.status(400).send(error)
+    res.status(400).send(error);
   }
 };
 
