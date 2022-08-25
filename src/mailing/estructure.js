@@ -18,14 +18,16 @@ class mailStructure {
   setHtmlRegister(userName, password) {
     this.html = `
     <div>
-            <h1>Welcome to MusiCommerce</h1>
-            <div>
-              <h3>Summary of your information:</h3>
-              <ul>
-                <li>Username: ${userName}</li>
-                <li>Password: ${password}</li>
-              </ul>
-            </div>
+          <div >
+            <h1 style="color:#2B4570">Welcome to MusiCommerce</h1>
+          </div>
+          <div>
+            <h3 style="color:#2B4570">Summary of your information:</h3>
+             <ul>
+               <li><b style="color:#5497A7">Username:</b> ${userName}</li>
+               <li><b style="color:#5497A7">Password:</b> ${password}</li>
+             </ul>
+           </div>
             <a href="https://www.google.com">Ir a Musiccomerce</a>
     </div>`;
   }
