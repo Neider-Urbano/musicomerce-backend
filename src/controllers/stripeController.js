@@ -3,7 +3,6 @@ require("dotenv").config();
 const stripe = Stripe(process.env.REACT_APP_PUBLIC_STRIPE_SECRET_KEY);
 
 const handler = async (req, res) => {
-  console.log(req.body);
   if (req.method === "POST") {
     try {
       // Create Checkout Sessions from body params.
@@ -12,11 +11,8 @@ const handler = async (req, res) => {
         mode: "payment",
         payment_method_types: ["card"],
         billing_address_collection: "auto",
-        shipping_options: [
-          { shipping_rate: "shr_1LVzvhBerpNYACotSjDZXifA" },
-        ],
+        shipping_options: [{ shipping_rate: "shr_1LVzvhBerpNYACotSjDZXifA" }],
         line_items: req.body.map((item) => {
-          
           return {
             price_data: {
               currency: "usd",
@@ -28,11 +24,11 @@ const handler = async (req, res) => {
               unit_amount: item.price * 100,
             },
             adjustable_quantity: {
-                enabled: true,
-                minimum: 1,
+              enabled: true,
+              minimum: 1,
             },
             quantity: item.quantity,
-          }
+          };
         }),
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/?canceled=true`,
@@ -48,7 +44,6 @@ const handler = async (req, res) => {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
-}
-
+};
 
 module.exports = handler;

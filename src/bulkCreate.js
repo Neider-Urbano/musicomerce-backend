@@ -18,11 +18,6 @@ let allData = async () => {
       where: { id: 1 },
     });
 
-    /* if (!instValidation) {
-      await Admin.bulkCreate(admins);
-      console.log("Admins created");
-    } */
-
     if (!instValidation) {
       await Admin.bulkCreate(admins);
       await User.bulkCreate(users);

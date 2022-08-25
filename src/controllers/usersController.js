@@ -182,11 +182,9 @@ const getUserMail = async (req, res) => {
   const { email } = req.body;
   try {
     let user = await User.findByPk(req.user_id);
-    console.log("ID USUARIO", user.id);
     if (user) {
       if (user.email == email) {
         res.status(200).send(user.email);
-        console.log("EL CORREO", user.email);
       } else {
         res.send("EMAIL NO ECNONTRADO");
       }

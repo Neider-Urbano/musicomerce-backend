@@ -2,144 +2,138 @@ const { User, Trolley, Instrument, Category } = require("../db");
 const { Op } = require("sequelize");
 const { user } = require("pg/lib/defaults");
 
+const add_trolley = async (req, res) => {
+  let user_id = req.user_id;
+  let instrumentId = req.body.id;
+  if (!instrumentId)
+    return res.status(400).send("no se envio el id del insturmento por body");
+  try {
+    let carrito = await Trolley.create({ userId: user_id, instrumentId });
 
-const add_trolley=async(req,res)=>{
-    let user_id=req.user_id;
-    let instrumentId=req.body.id;
-    if(!instrumentId) return res.status(400).send("no se envio el id del insturmento por body")
-    try {
-        let carrito=await Trolley.create({userId:user_id,instrumentId})
-        
-        res.send("Se agrego el instrumento al carrito")
-        
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
+    res.send("Se agrego el instrumento al carrito");
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 
 const get_trolley = async (req, res) => {
-    let user_id = req.user_id;
-    try {
-        
-        
-        let carritos = await Instrument.findAll({
-            include: { model: User },
-        })
-        let array = [];
-        for (let i = 0; i < carritos.length; i++) {
-            if (carritos[i].dataValues.users.length) {
-                for (let j = 0; j < carritos[i].dataValues.users.length; j++) {
-                   
-                    console.log(carritos[i].dataValues.users[j].Trolley)
-                    if (carritos[i].dataValues.users[j].Trolley.dataValues.userId == user_id) {
-                        array.push({
-                            userStock:carritos[i].dataValues.users[j].Trolley.dataValues.userStock,
-                            id: carritos[i].dataValues.id,
-                            name: carritos[i].dataValues.name,
-                            brand: carritos[i].dataValues.brand,
-                            price: carritos[i].dataValues.price,
-                            img: carritos[i].dataValues.img,
-                            description: carritos[i].dataValues.description,
-                            stock: carritos[i].dataValues.stock,
-                            status: carritos[i].dataValues.status,
-                            categoryId: carritos[i].dataValues.categoryId,
-                            raiting:carritos[i].dataValues.raiting
-                        })
-                    }
-    
-    
-                }
-    
-    
-            }
+  let user_id = req.user_id;
+  try {
+    let carritos = await Instrument.findAll({
+      include: { model: User },
+    });
+    let array = [];
+    for (let i = 0; i < carritos.length; i++) {
+      if (carritos[i].dataValues.users.length) {
+        for (let j = 0; j < carritos[i].dataValues.users.length; j++) {
+          if (
+            carritos[i].dataValues.users[j].Trolley.dataValues.userId == user_id
+          ) {
+            array.push({
+              userStock:
+                carritos[i].dataValues.users[j].Trolley.dataValues.userStock,
+              id: carritos[i].dataValues.id,
+              name: carritos[i].dataValues.name,
+              brand: carritos[i].dataValues.brand,
+              price: carritos[i].dataValues.price,
+              img: carritos[i].dataValues.img,
+              description: carritos[i].dataValues.description,
+              stock: carritos[i].dataValues.stock,
+              status: carritos[i].dataValues.status,
+              categoryId: carritos[i].dataValues.categoryId,
+              raiting: carritos[i].dataValues.raiting,
+            });
+          }
         }
-        res.send(array)
-    } catch (error) {
-        res.status(400).send(error)
+      }
     }
-}
+    res.send(array);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
 
-const delete_trolley=async(req,res)=>{
-    let user_id = req.user_id;
-    let instrumentId=req.body.id;
-    if(!instrumentId) return res.status(400).send("no se envio el id del insturmento por body")
-    try {
-        await Trolley.destroy({
-            where: {
-              instrumentId,
-              userId:user_id
-            }
-          });
-        res.send("se borro la relacion")
-        
-    } catch (error) {
-        res.status(400).send(error)
+const delete_trolley = async (req, res) => {
+  let user_id = req.user_id;
+  let instrumentId = req.body.id;
+  if (!instrumentId)
+    return res.status(400).send("no se envio el id del insturmento por body");
+  try {
+    await Trolley.destroy({
+      where: {
+        instrumentId,
+        userId: user_id,
+      },
+    });
+    res.send("se borro la relacion");
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+const delete_all_trolley = async (req, res) => {
+  let user_id = req.user_id;
+  try {
+    await Trolley.destroy({
+      where: { userId: user_id },
+    });
+
+    res.send("all connections deleted");
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+const more_Stock = async (req, res) => {
+  let user_id = req.user_id;
+  let instrumentId = req.body.id;
+  if (!instrumentId)
+    return res.status(400).send("no se envio el id del insturmento por body");
+
+  try {
+    let carrito = await Trolley.findOne({
+      where: { userId: user_id },
+      where: { instrumentId },
+    });
+    carrito.userStock = carrito.userStock + 1;
+    await carrito.save();
+    res.send("se incremento el stock");
+  } catch (error) {
+    res.send(error);
+  }
+};
+const less_stock = async (req, res) => {
+  let user_id = req.user_id;
+  let instrumentId = req.body.id;
+  if (!instrumentId)
+    return res.status(400).send("no se envio el id del insturmento por body");
+
+  try {
+    let carrito = await Trolley.findOne({
+      where: { userId: user_id },
+      where: { instrumentId },
+    });
+    if (carrito.userStock === 1) {
+      await Trolley.destroy({
+        where: { userId: user_id },
+        where: { instrumentId },
+      });
+      return res.send("se elimino la relacion");
     }
-}
-const delete_all_trolley=async(req,res)=>{
-    let user_id = req.user_id;
-    try {
-        await Trolley.destroy({
-            where:{userId:user_id}
-        })
+    carrito.userStock = carrito.userStock - 1;
+    await carrito.save();
+    res.send("se decremento el stock");
+  } catch (error) {
+    res.send(error);
+  }
+};
 
-    res.send("all connections deleted")
-    } catch (error) {
-        res.status(400).send(error)
-    }
-    
-}
-const more_Stock=async(req,res)=>{
-    let user_id = req.user_id;
-    let instrumentId=req.body.id;
-    if(!instrumentId) return res.status(400).send("no se envio el id del insturmento por body")
-
-    try {
-        let carrito=await Trolley.findOne({
-            where:{userId:user_id},
-            where:{instrumentId}
-        })
-         carrito.userStock=carrito.userStock+1
-        await carrito.save()
-        res.send("se incremento el stock")
-    } catch (error) {
-        res.send(error)
-    }
-}
-const less_stock=async(req,res)=>{
-    let user_id = req.user_id;
-    let instrumentId=req.body.id;
-    if(!instrumentId) return res.status(400).send("no se envio el id del insturmento por body")
-
-    try {
-        let carrito=await Trolley.findOne({
-            where:{userId:user_id},
-            where:{instrumentId}
-        })
-        if(carrito.userStock===1){
-            await Trolley.destroy({
-                where:{userId:user_id},
-                where:{instrumentId}
-            })
-            return res.send("se elimino la relacion")
-        }
-         carrito.userStock=carrito.userStock-1
-        await carrito.save()
-        res.send("se decremento el stock")
-    } catch (error) {
-        res.send(error)
-    }
-}
-
-
-    module.exports = {
-        get_trolley,
-        post_trolley: add_trolley,
-        delete_trolley,
-        delete_all_trolley,
-        less_stock,
-        more_Stock
-    }
+module.exports = {
+  get_trolley,
+  post_trolley: add_trolley,
+  delete_trolley,
+  delete_all_trolley,
+  less_stock,
+  more_Stock,
+};
 // [
 //     {
 //       "id": 1,

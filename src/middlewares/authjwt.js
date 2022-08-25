@@ -1,7 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-
 const verifyToken = async (req, res, next) => {
   try {
     const headerToken = req.get("Authorization");
@@ -13,18 +12,16 @@ const verifyToken = async (req, res, next) => {
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      if(!decoded.user_id) return res.status(401).send({error:"id not found"})
-      console.log(decoded)
+      if (!decoded.user_id)
+        return res.status(401).send({ error: "id not found" });
+
       req.user_id = decoded.user_id;
 
       next();
-
     } catch (error) {
-      console.log(error);
       return res.status(401).send(error);
     }
   } catch (error) {
-    console.log(error);
     return res.send(error);
   }
 };
@@ -41,6 +38,5 @@ const verifyPilar = async (req, res, next) => {
     return res.send(error);
   }
 };
-
 
 module.exports = { verifyToken, verifyPilar };
