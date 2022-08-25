@@ -43,6 +43,7 @@ const get_trolley = async (req, res) => {
                             stock: carritos[i].dataValues.stock,
                             status: carritos[i].dataValues.status,
                             categoryId: carritos[i].dataValues.categoryId,
+                            raiting:carritos[i].dataValues.raiting
                         })
                     }
     

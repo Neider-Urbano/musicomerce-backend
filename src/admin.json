@@ -15,6 +15,14 @@
       "lastName": "Restrepo",
       "email": "oscar22@gmail.com",
       "rol": "admin"
+    },
+    {
+      "userName": "nilsonmax2022",
+      "password": "12345678a",
+      "firstName": "Nilson",
+      "lastName": "Benitez",
+      "email": "nilsonbenitez2016@gmail.com",
+      "rol": "admin"
     }
   ]
 }
